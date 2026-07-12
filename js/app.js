@@ -1,4 +1,4 @@
-/* ===== Магазин «Клёвое место» — клиентская логика ===== */
+/* ===== Магазин «РЫБОЛОВ» — клиентская логика ===== */
 (function () {
   'use strict';
 
@@ -12,8 +12,55 @@
   const $ = (sel) => document.querySelector(sel);
   const fmt = (n) => new Intl.NumberFormat('ru-RU').format(n) + ' ₽';
 
-  // Атрибут onerror: если файла фото ещё нет — показываем фирменную заглушку.
+  // onerror-фолбэк на фирменную заглушку, если файла фото нет.
   const imgFallback = (p) => `this.onerror=null;this.src='${productFallback(p)}'`;
+
+  /* ---------- Разметка карточки товара (общая) ---------- */
+  function cardMarkup(p) {
+    const discount = p.old > p.price
+      ? `<span class="card__badge">−${Math.round((1 - p.price / p.old) * 100)}%</span>` : '';
+    const hit = p.rating >= 4.9 && p.stock ? `<span class="card__badge card__badge--hit">Хит</span>` : '';
+    const out = !p.stock ? `<span class="card__badge card__badge--out">Нет в наличии</span>` : '';
+    const topBadge = discount || hit;
+    return `<article class="card" data-id="${p.id}">
+      <div class="card__media" data-open="${p.id}">
+        <img class="card__img" loading="lazy" alt="${p.name}"
+             src="${photoUrl(p)}" onerror="${imgFallback(p)}">
+        ${topBadge}${out}
+      </div>
+      <div class="card__body">
+        <span class="card__brand">${p.brand}</span>
+        <h3 class="card__name" data-open="${p.id}">${p.name}</h3>
+        <div class="card__rating">★ ${p.rating.toFixed(1)} <span>· ${p.stock ? 'в наличии' : 'под заказ'}</span></div>
+        <div class="card__price-row">
+          <span class="card__price">${fmt(p.price)}</span>
+          ${p.old > p.price ? `<span class="card__old">${fmt(p.old)}</span>` : ''}
+        </div>
+        <button class="card__btn" data-add="${p.id}" ${p.stock ? '' : 'disabled'}>
+          ${p.stock ? 'В корзину' : 'Нет в наличии'}
+        </button>
+      </div>
+    </article>`;
+  }
+
+  function wireCards(container) {
+    container.querySelectorAll('[data-add]').forEach((el) =>
+      el.addEventListener('click', (e) => { e.stopPropagation(); addToCart(el.dataset.add); }));
+    container.querySelectorAll('[data-open]').forEach((el) =>
+      el.addEventListener('click', () => openModal(el.dataset.open)));
+  }
+
+  /* ---------- Хиты продаж ---------- */
+  function renderHits() {
+    const grid = $('#hitsGrid');
+    if (!grid) return;
+    const hits = PRODUCTS
+      .filter((p) => p.stock)
+      .sort((a, b) => (b.rating - a.rating) || ((b.img ? 1 : 0) - (a.img ? 1 : 0)) || (b.price - a.price))
+      .slice(0, 4);
+    grid.innerHTML = hits.map(cardMarkup).join('');
+    wireCards(grid);
+  }
 
   /* ---------- Категории ---------- */
   function renderCategories() {
@@ -47,7 +94,6 @@
     filters.innerHTML = items.map((c) =>
       `<button class="chip ${state.category === c.id ? 'is-active' : ''}" data-cat="${c.id}">${c.name}</button>`
     ).join('');
-
     filters.querySelectorAll('.chip').forEach((el) => {
       el.addEventListener('click', () => {
         state.category = el.dataset.cat;
@@ -57,14 +103,13 @@
     });
   }
 
-  /* ---------- Список товаров ---------- */
+  /* ---------- Каталог ---------- */
   function getVisible() {
     let list = PRODUCTS.slice();
     if (state.category !== 'all') list = list.filter((p) => p.cat === state.category);
     if (state.query) {
       const q = state.query.toLowerCase();
-      list = list.filter((p) =>
-        (p.name + ' ' + p.brand).toLowerCase().includes(q));
+      list = list.filter((p) => (p.name + ' ' + p.brand).toLowerCase().includes(q));
     }
     switch (state.sort) {
       case 'price-asc':  list.sort((a, b) => a.price - b.price); break;
@@ -86,35 +131,8 @@
     $('#catalogMeta').textContent =
       `${catName} · найдено товаров: ${list.length}${state.query ? ` · запрос «${state.query}»` : ''}`;
 
-    wrap.innerHTML = list.map((p) => {
-      const discount = p.old > p.price ? `<span class="card__badge">−${Math.round((1 - p.price / p.old) * 100)}%</span>` : '';
-      const out = !p.stock ? `<span class="card__badge card__badge--out">Нет в наличии</span>` : '';
-      return `<article class="card" data-id="${p.id}">
-        <div class="card__media" data-open="${p.id}">
-          <img class="card__img" loading="lazy" alt="${p.name}"
-               src="${photoUrl(p)}"
-               onerror="${imgFallback(p)}">
-          ${discount}${out}
-        </div>
-        <div class="card__body">
-          <span class="card__brand">${p.brand}</span>
-          <h3 class="card__name" data-open="${p.id}">${p.name}</h3>
-          <div class="card__rating">★ ${p.rating.toFixed(1)} <span>· ${p.stock ? 'в наличии' : 'под заказ'}</span></div>
-          <div class="card__price-row">
-            <span class="card__price">${fmt(p.price)}</span>
-            ${p.old > p.price ? `<span class="card__old">${fmt(p.old)}</span>` : ''}
-          </div>
-          <button class="card__btn" data-add="${p.id}" ${p.stock ? '' : 'disabled'}>
-            ${p.stock ? 'В корзину' : 'Нет в наличии'}
-          </button>
-        </div>
-      </article>`;
-    }).join('');
-
-    wrap.querySelectorAll('[data-add]').forEach((el) =>
-      el.addEventListener('click', (e) => { e.stopPropagation(); addToCart(el.dataset.add); }));
-    wrap.querySelectorAll('[data-open]').forEach((el) =>
-      el.addEventListener('click', () => openModal(el.dataset.open)));
+    wrap.innerHTML = list.map(cardMarkup).join('');
+    wireCards(wrap);
   }
 
   /* ---------- Модалка товара ---------- */
@@ -126,8 +144,7 @@
     $('#modalCard').innerHTML = `
       <button class="modal__close" id="modalClose" aria-label="Закрыть">✕</button>
       <div class="modal__grid">
-        <img class="modal__img" alt="${p.name}" src="${photoUrl(p)}"
-             onerror="${imgFallback(p)}">
+        <img class="modal__img" alt="${p.name}" src="${photoUrl(p)}" onerror="${imgFallback(p)}">
         <div class="modal__info">
           <span class="modal__brand">${p.brand}</span>
           <h2 class="modal__title">${p.name}</h2>
@@ -152,17 +169,17 @@
 
   /* ---------- Корзина ---------- */
   function loadCart() {
-    try { return JSON.parse(localStorage.getItem('klevoe_cart')) || {}; }
+    try { return JSON.parse(localStorage.getItem('rybolov_cart')) || {}; }
     catch { return {}; }
   }
-  function saveCart() { localStorage.setItem('klevoe_cart', JSON.stringify(state.cart)); }
+  function saveCart() { localStorage.setItem('rybolov_cart', JSON.stringify(state.cart)); }
 
   function addToCart(id) {
     const p = PRODUCTS.find((x) => x.id === id);
     if (!p || !p.stock) return;
     state.cart[id] = (state.cart[id] || 0) + 1;
     saveCart(); updateCartBadge(); renderCart();
-    showToast(`«${p.name.slice(0, 32)}…» добавлен в корзину`);
+    showToast(`«${p.name.slice(0, 34)}…» — в корзине`);
   }
   function changeQty(id, delta) {
     if (!state.cart[id]) return;
@@ -192,8 +209,7 @@
         if (!p) return '';
         const q = state.cart[id];
         return `<div class="cart-item">
-          <img class="cart-item__img" alt="${p.name}" src="${photoUrl(p)}"
-               onerror="${imgFallback(p)}">
+          <img class="cart-item__img" alt="${p.name}" src="${photoUrl(p)}" onerror="${imgFallback(p)}">
           <div class="cart-item__info">
             <div class="cart-item__name">${p.name}</div>
             <div class="cart-item__price">${fmt(p.price * q)}</div>
@@ -237,11 +253,11 @@
 
   /* ---------- Инициализация ---------- */
   function init() {
+    renderHits();
     renderCategories();
     renderFilters();
     renderProducts();
     updateCartBadge();
-
     $('#statCount').textContent = PRODUCTS.filter((p) => p.stock).length;
 
     let searchTimer;
@@ -278,6 +294,12 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') { closeCart(); closeModal(); }
     });
+
+    // Сжатие шапки при прокрутке
+    const header = $('#siteHeader');
+    const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 20);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   }
 
   document.addEventListener('DOMContentLoaded', init);

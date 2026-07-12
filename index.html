@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="РЫБОЛОВ — рыболовный магазин в Санкт-Петербурге. Спиннинги, удочки, катушки, воблеры, лески и снасти для рыбалки по реальным ценам.">
-  <title>РЫБОЛОВ — магазин снастей для рыбалки в Санкт-Петербурге</title>
+  <meta name="description" content="РЫБОЛОВ — премиальный рыболовный магазин в Санкт-Петербурге. Спиннинги, катушки, лески, воблеры и снасти от мировых брендов по реальным ценам.">
+  <title>РЫБОЛОВ — премиальные снасти для рыбалки · Санкт-Петербург</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎣</text></svg>">
 </head>
@@ -14,18 +17,21 @@
   <!-- Верхняя плашка -->
   <div class="topbar">
     <div class="container topbar__inner">
-      <span>🚚 Бесплатная доставка по Санкт-Петербургу от 3000 ₽</span>
+      <span class="topbar__item">🚚 Бесплатная доставка по Санкт-Петербургу от 3000 ₽</span>
+      <span class="topbar__item topbar__item--mid">🏆 Оригинальные снасти · гарантия качества</span>
       <span class="topbar__phone">📞 <a href="tel:+78121234567">+7 (812) 123-45-67</a></span>
     </div>
   </div>
 
   <!-- Шапка -->
-  <header class="header">
+  <header class="header" id="siteHeader">
     <div class="container header__inner">
       <a href="#top" class="logo">
         <span class="logo__icon">🎣</span>
-        <span class="logo__text">РЫБО<span>ЛОВ</span></span>
-        <span class="logo__sub">снасти для рыбалки · СПб</span>
+        <span class="logo__wrap">
+          <span class="logo__text">РЫБО<span>ЛОВ</span></span>
+          <span class="logo__sub">снасти для рыбалки · СПб</span>
+        </span>
       </a>
 
       <div class="search">
@@ -46,14 +52,15 @@
   <!-- Герой -->
   <section class="hero">
     <div class="hero__waves" aria-hidden="true"></div>
-    <div class="container hero__inner">
+    <div class="hero__glow" aria-hidden="true"></div>
+    <div class="container hero__grid">
       <div class="hero__content">
-        <p class="hero__eyebrow">🐟 Рыболовный магазин №1 в Санкт-Петербурге</p>
-        <h1 class="hero__title">Всё для рыбалки —<br>от поплавка<br>до трофея</h1>
-        <p class="hero__text">Спиннинги, удочки, катушки, воблеры, блёсны и снасти от проверенных брендов. Реальные фото, честные цены, доставка по всей России.</p>
+        <p class="hero__eyebrow"><span class="dot"></span> Рыболовный магазин №1 в Санкт-Петербурге</p>
+        <h1 class="hero__title">Снасти,<br>достойные<br><span class="hero__accent">вашего трофея</span></h1>
+        <p class="hero__text">Спиннинги, катушки, лески и приманки от мировых брендов. Реальные фото, честные цены и совет опытного рыбака — доставим по всей России.</p>
         <div class="hero__actions">
-          <a href="#catalog" class="btn btn--primary">🎣 В каталог снастей</a>
-          <a href="#contacts" class="btn btn--ghost">Как нас найти</a>
+          <a href="#catalog" class="btn btn--primary">Перейти в каталог</a>
+          <a href="#hits" class="btn btn--ghost">Хиты продаж</a>
         </div>
         <div class="hero__stats">
           <div><b id="statCount">0</b><span>снастей в наличии</span></div>
@@ -61,6 +68,52 @@
           <div><b>4.8★</b><span>средний рейтинг</span></div>
         </div>
       </div>
+
+      <!-- Карточка-герой (премиальный товар) -->
+      <aside class="showcase">
+        <div class="showcase__card">
+          <span class="showcase__ribbon">Хит сезона</span>
+          <div class="showcase__media">
+            <img src="assets/img/rl-05.jpg" alt="Катушка Shimano Twin Power XD 4000" loading="eager">
+          </div>
+          <div class="showcase__body">
+            <span class="showcase__brand">Shimano</span>
+            <h3 class="showcase__name">Twin Power XD 4000</h3>
+            <div class="showcase__rating">★★★★★ <span>5.0 · флагман</span></div>
+            <div class="showcase__foot">
+              <span class="showcase__price">32 900 ₽</span>
+              <a href="#hits" class="showcase__link">Смотреть →</a>
+            </div>
+          </div>
+        </div>
+        <div class="showcase__badge showcase__badge--a">🐟 Оригинал</div>
+        <div class="showcase__badge showcase__badge--b">🚚 Доставка 1 день</div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Лента брендов -->
+  <div class="brands">
+    <div class="container brands__inner">
+      <span class="brands__label">С нами бренды:</span>
+      <div class="brands__list">
+        <span>Shimano</span><span>Daiwa</span><span>Graphiteleader</span><span>Rapala</span>
+        <span>Kosadaka</span><span>SPRO</span><span>Maximus</span><span>Owner</span><span>Mepps</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Хиты продаж -->
+  <section class="hits" id="hits">
+    <div class="container">
+      <div class="section-head section-head--row">
+        <div>
+          <h2 class="section-title">Хиты продаж</h2>
+          <p class="section-sub">Снасти, которые берут чаще всего</p>
+        </div>
+        <a href="#catalog" class="section-link">Весь каталог →</a>
+      </div>
+      <div class="products products--hits" id="hitsGrid"></div>
     </div>
   </section>
 
@@ -95,18 +148,50 @@
       <div class="products" id="products"></div>
       <div class="empty" id="empty" hidden>
         <p>😕 По вашему запросу ничего не найдено.</p>
-        <button class="btn btn--ghost btn--dark" id="resetBtn">Сбросить фильтры</button>
+        <button class="btn btn--dark" id="resetBtn">Сбросить фильтры</button>
       </div>
     </div>
   </section>
 
   <!-- Преимущества -->
   <section class="features">
-    <div class="container features__grid">
-      <div class="feature"><span class="feature__ico">🚚</span><h3>Доставка по России</h3><p>СДЭК, Почта России и курьер по Санкт-Петербургу за 1 день.</p></div>
-      <div class="feature"><span class="feature__ico">✅</span><h3>Только оригинал</h3><p>Работаем напрямую с брендами. Гарантия на все снасти.</p></div>
-      <div class="feature"><span class="feature__ico">🎣</span><h3>Совет рыбака</h3><p>Поможем подобрать снасть под водоём и способ ловли.</p></div>
-      <div class="feature"><span class="feature__ico">💳</span><h3>Удобная оплата</h3><p>Карта, СБП, наличные при получении. Рассрочка от 4 месяцев.</p></div>
+    <div class="container">
+      <div class="section-head section-head--light">
+        <h2 class="section-title section-title--light">Почему выбирают РЫБОЛОВ</h2>
+      </div>
+      <div class="features__grid">
+        <div class="feature"><span class="feature__ico">🚚</span><h3>Доставка по России</h3><p>СДЭК, Почта России и курьер по Санкт-Петербургу за 1 день.</p></div>
+        <div class="feature"><span class="feature__ico">✅</span><h3>Только оригинал</h3><p>Работаем напрямую с брендами. Гарантия на все снасти.</p></div>
+        <div class="feature"><span class="feature__ico">🎣</span><h3>Совет рыбака</h3><p>Поможем подобрать снасть под водоём и способ ловли.</p></div>
+        <div class="feature"><span class="feature__ico">💳</span><h3>Удобная оплата</h3><p>Карта, СБП, наличные при получении. Рассрочка от 4 месяцев.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Отзывы -->
+  <section class="reviews">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Отзывы рыбаков</h2>
+        <p class="section-sub">Более 8 000 довольных покупателей по всей стране</p>
+      </div>
+      <div class="reviews__grid">
+        <figure class="review">
+          <div class="review__stars">★★★★★</div>
+          <blockquote>Взял спиннинг Graphiteleader и катушку Twin Power — сборка мечты. Консультант помог подобрать под джиг на Неве. Заброс — космос!</blockquote>
+          <figcaption><span class="review__ava">А</span><div><b>Алексей М.</b><small>Санкт-Петербург</small></div></figcaption>
+        </figure>
+        <figure class="review">
+          <div class="review__stars">★★★★★</div>
+          <blockquote>Заказывал лески и воблеры с доставкой в Мурманск. Всё оригинал, пришло за два дня, упаковано отлично. Цены ниже, чем у конкурентов.</blockquote>
+          <figcaption><span class="review__ava">И</span><div><b>Ирина К.</b><small>Мурманск</small></div></figcaption>
+        </figure>
+        <figure class="review">
+          <div class="review__stars">★★★★★</div>
+          <blockquote>Лучший рыболовный магазин в Питере. Приезжаю на Лиговский за снастями каждый сезон. Ассортимент и сервис на высоте.</blockquote>
+          <figcaption><span class="review__ava">Д</span><div><b>Дмитрий В.</b><small>Санкт-Петербург</small></div></figcaption>
+        </figure>
+      </div>
     </div>
   </section>
 
@@ -137,12 +222,32 @@
 
   <!-- Подвал -->
   <footer class="footer">
-    <div class="container footer__inner">
-      <a href="#top" class="logo logo--footer">
-        <span class="logo__icon">🎣</span>
-        <span class="logo__text">РЫБО<span>ЛОВ</span></span>
-      </a>
-      <p class="footer__note">© 2026 «РЫБОЛОВ», Санкт-Петербург. Всё для рыбалки — от поплавка до трофея.</p>
+    <div class="container footer__grid">
+      <div class="footer__col footer__brand">
+        <a href="#top" class="logo logo--footer">
+          <span class="logo__icon">🎣</span>
+          <span class="logo__wrap"><span class="logo__text">РЫБО<span>ЛОВ</span></span></span>
+        </a>
+        <p class="footer__about">Премиальные снасти для рыбалки в Санкт-Петербурге. Всё — от поплавка до трофея.</p>
+        <div class="footer__pay"><span>Visa</span><span>Mir</span><span>СБП</span><span>MC</span></div>
+      </div>
+      <div class="footer__col">
+        <h4>Каталог</h4>
+        <a href="#catalog">Спиннинги</a><a href="#catalog">Катушки</a><a href="#catalog">Лески и шнуры</a><a href="#catalog">Приманки</a><a href="#catalog">Аксессуары</a>
+      </div>
+      <div class="footer__col">
+        <h4>Покупателям</h4>
+        <a href="#hits">Хиты продаж</a><a href="#reviews">Отзывы</a><a href="#contacts">Доставка и оплата</a><a href="#contacts">Контакты</a>
+      </div>
+      <div class="footer__col">
+        <h4>Контакты</h4>
+        <a href="tel:+78121234567">+7 (812) 123-45-67</a>
+        <a href="mailto:info@rybolov.spb.ru">info@rybolov.spb.ru</a>
+        <span class="footer__muted">Лиговский пр-т, 50<br>ежедневно 09:00–21:00</span>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">© 2026 «РЫБОЛОВ», Санкт-Петербург. Всё для рыбалки.</div>
     </div>
   </footer>
 
