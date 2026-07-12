@@ -26,12 +26,8 @@
   <!-- Шапка -->
   <header class="header" id="siteHeader">
     <div class="container header__inner">
-      <a href="#top" class="logo">
-        <span class="logo__icon">🎣</span>
-        <span class="logo__wrap">
-          <span class="logo__text">РЫБО<span>ЛОВ</span></span>
-          <span class="logo__sub">снасти для рыбалки · СПб</span>
-        </span>
+      <a href="#top" class="logo logo--emblem" aria-label="РЫБОЛОВ — премиальные товары для рыбалки">
+        <img src="assets/img/logo-horizontal.jpeg" alt="РЫБОЛОВ — премиальные товары для рыбалки" class="logo__img">
       </a>
 
       <div class="search">
@@ -40,9 +36,16 @@
       </div>
 
       <div class="header__actions">
+        <button class="icon-btn" id="favToggle" aria-label="Избранное">
+          <span class="icon-btn__ico">♥</span>
+          <span class="icon-btn__count" id="favCount">0</span>
+        </button>
+        <button class="icon-btn" id="accountToggle" aria-label="Личный кабинет">
+          <span class="icon-btn__ico">👤</span>
+          <span class="icon-btn__label" id="accountLabel">Войти</span>
+        </button>
         <button class="cart-toggle" id="cartToggle" aria-label="Корзина">
           <span class="cart-toggle__ico">🛒</span>
-          <span class="cart-toggle__label">Корзина</span>
           <span class="cart-toggle__count" id="cartCount">0</span>
         </button>
       </div>
@@ -69,7 +72,6 @@
         </div>
       </div>
 
-      <!-- Карточка-герой (премиальный товар) -->
       <aside class="showcase">
         <div class="showcase__card">
           <span class="showcase__ribbon">Хит сезона</span>
@@ -98,7 +100,7 @@
       <span class="brands__label">С нами бренды:</span>
       <div class="brands__list">
         <span>Shimano</span><span>Daiwa</span><span>Graphiteleader</span><span>Rapala</span>
-        <span>Kosadaka</span><span>SPRO</span><span>Maximus</span><span>Owner</span><span>Mepps</span>
+        <span>Mepps</span><span>Yo-Zuri</span><span>Jackall</span><span>Owner</span><span>Plano</span>
       </div>
     </div>
   </div>
@@ -117,12 +119,12 @@
     </div>
   </section>
 
-  <!-- Категории -->
+  <!-- Категории (вкладки) -->
   <section class="cats" id="categories">
     <div class="container">
       <div class="section-head">
         <h2 class="section-title">Категории снастей</h2>
-        <p class="section-sub">Выберите, что нужно для вашей рыбалки</p>
+        <p class="section-sub">Выберите вкладку — и переходите к нужным товарам</p>
       </div>
       <div class="cats__grid" id="catsGrid"></div>
     </div>
@@ -131,24 +133,66 @@
   <!-- Каталог -->
   <section class="catalog" id="catalog">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head section-head--left">
         <h2 class="section-title">Каталог снастей</h2>
         <p class="section-sub">Реальные товары, характеристики и цены</p>
       </div>
-      <div class="catalog__tools">
-        <div class="filters" id="filters"></div>
-        <select id="sortSelect" class="select">
-          <option value="popular">По популярности</option>
-          <option value="price-asc">Сначала дешёвые</option>
-          <option value="price-desc">Сначала дорогие</option>
-          <option value="rating">По рейтингу</option>
-        </select>
+
+      <!-- Вкладки категорий -->
+      <div class="tabs" id="filters"></div>
+
+      <!-- Панель фильтров -->
+      <div class="toolbar">
+        <div class="toolbar__group">
+          <label class="field">
+            <span class="field__label">Бренд</span>
+            <select id="brandFilter" class="select"></select>
+          </label>
+          <label class="field">
+            <span class="field__label">Цена, ₽</span>
+            <span class="range">
+              <input type="number" id="priceMin" class="input" placeholder="от" min="0">
+              <span class="range__sep">–</span>
+              <input type="number" id="priceMax" class="input" placeholder="до" min="0">
+            </span>
+          </label>
+          <label class="check">
+            <input type="checkbox" id="inStock"> <span>Только в наличии</span>
+          </label>
+        </div>
+        <div class="toolbar__group">
+          <label class="field">
+            <span class="field__label">Сортировка</span>
+            <select id="sortSelect" class="select">
+              <option value="popular">По популярности</option>
+              <option value="price-asc">Сначала дешёвые</option>
+              <option value="price-desc">Сначала дорогие</option>
+              <option value="rating">По рейтингу</option>
+            </select>
+          </label>
+          <button class="btn btn--dark btn--sm" id="resetFilters">Сбросить</button>
+        </div>
       </div>
+
       <p class="catalog__meta" id="catalogMeta"></p>
       <div class="products" id="products"></div>
       <div class="empty" id="empty" hidden>
         <p>😕 По вашему запросу ничего не найдено.</p>
         <button class="btn btn--dark" id="resetBtn">Сбросить фильтры</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Атмосферная CTA-полоса (фото рыбалки) -->
+  <section class="cta" id="cta">
+    <div class="cta__overlay"></div>
+    <div class="container cta__inner">
+      <img src="assets/img/logo-crest.jpeg" alt="Герб РЫБОЛОВ" class="cta__seal">
+      <div class="cta__content">
+        <p class="cta__eyebrow">🎣 От поплавка до трофея</p>
+        <h2 class="cta__title">Лучшая рыбалка начинается<br>с правильной снасти</h2>
+        <p class="cta__text">Соберём для вас комплект под любой водоём Ленобласти — от ультралайта на форель до карпового фидера на Финском заливе.</p>
+        <a href="#catalog" class="btn btn--primary">Собрать снасть</a>
       </div>
     </div>
   </section>
@@ -169,7 +213,7 @@
   </section>
 
   <!-- Отзывы -->
-  <section class="reviews">
+  <section class="reviews" id="reviews">
     <div class="container">
       <div class="section-head">
         <h2 class="section-title">Отзывы рыбаков</h2>
@@ -225,15 +269,14 @@
     <div class="container footer__grid">
       <div class="footer__col footer__brand">
         <a href="#top" class="logo logo--footer">
-          <span class="logo__icon">🎣</span>
-          <span class="logo__wrap"><span class="logo__text">РЫБО<span>ЛОВ</span></span></span>
+          <img src="assets/img/logo-horizontal.jpeg" alt="РЫБОЛОВ" class="logo__img">
         </a>
         <p class="footer__about">Премиальные снасти для рыбалки в Санкт-Петербурге. Всё — от поплавка до трофея.</p>
         <div class="footer__pay"><span>Visa</span><span>Mir</span><span>СБП</span><span>MC</span></div>
       </div>
       <div class="footer__col">
         <h4>Каталог</h4>
-        <a href="#catalog">Спиннинги</a><a href="#catalog">Катушки</a><a href="#catalog">Лески и шнуры</a><a href="#catalog">Приманки</a><a href="#catalog">Аксессуары</a>
+        <a href="#catalog" data-cat="spinning">Спиннинги</a><a href="#catalog" data-cat="reels">Катушки</a><a href="#catalog" data-cat="lines">Лески и шнуры</a><a href="#catalog" data-cat="lures">Приманки</a><a href="#catalog" data-cat="accessories">Аксессуары</a>
       </div>
       <div class="footer__col">
         <h4>Покупателям</h4>
@@ -271,6 +314,12 @@
   <div class="modal" id="productModal" hidden>
     <div class="modal__overlay" id="modalOverlay"></div>
     <div class="modal__card" id="modalCard"></div>
+  </div>
+
+  <!-- Личный кабинет -->
+  <div class="modal" id="accountModal" hidden>
+    <div class="modal__overlay" id="accountOverlay"></div>
+    <div class="modal__card modal__card--sm" id="accountCard"></div>
   </div>
 
   <div class="toast" id="toast" hidden></div>
