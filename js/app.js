@@ -90,16 +90,31 @@
   function renderCategories() {
     const grid = $('#catsGrid');
     grid.innerHTML = CATEGORIES.map((c) => {
-      const count = PRODUCTS.filter((p) => p.cat === c.id).length;
+      const inCat = PRODUCTS.filter((p) => p.cat === c.id);
+      const cover = inCat.find((p) => p.img) || inCat[0];
+      const word = declProducts(inCat.length);
       return `<button class="cat-card" data-cat="${c.id}">
-        <div class="cat-card__icon">${c.icon}</div>
-        <h3>${c.name}</h3>
-        <p>${c.desc}</p>
-        <span class="cat-card__count">${count} товаров →</span>
+        <div class="cat-card__media">
+          <img loading="lazy" alt="${esc(c.name)}" src="${photoUrl(cover)}" onerror="${imgFallback(cover)}">
+        </div>
+        <div class="cat-card__foot">
+          <div>
+            <div class="cat-card__name">${c.name}</div>
+            <div class="cat-card__count">${inCat.length} ${word}</div>
+          </div>
+          <span class="cat-card__arrow">→</span>
+        </div>
       </button>`;
     }).join('');
     grid.querySelectorAll('.cat-card').forEach((el) =>
       el.addEventListener('click', () => selectCategory(el.dataset.cat)));
+  }
+
+  function declProducts(n) {
+    const m10 = n % 10, m100 = n % 100;
+    if (m10 === 1 && m100 !== 11) return 'товар';
+    if (m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20)) return 'товара';
+    return 'товаров';
   }
 
   function selectCategory(cat) {
