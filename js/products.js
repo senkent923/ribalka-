@@ -1,99 +1,117 @@
 /*
- * Каталог товаров магазина «Клёвое место» (Санкт-Петербург).
- * Цены указаны в рублях и ориентированы на реальный рынок рыболовных снастей.
- * Поле photo — ключевые слова для реального фото (loremflickr тянет снимки с Flickr),
- * seed фиксирует конкретную фотографию за товаром, чтобы она не менялась при перезагрузке.
+ * Каталог магазина «РЫБОЛОВ» (Санкт-Петербург).
+ * Товары со своим фото содержат поле img (файл в assets/img).
+ * Цены — в рублях, ориентированы на реальный рынок снастей.
  */
 
 const CATEGORIES = [
-  { id: 'spinning',    name: 'Спиннинги',        icon: '🎣', desc: 'Удилища для ловли хищника на искусственные приманки' },
-  { id: 'rods',        name: 'Удилища',          icon: '🪝', desc: 'Поплавочные, фидерные и болонские удилища' },
-  { id: 'reels',       name: 'Катушки',          icon: '🌀', desc: 'Безынерционные и мультипликаторные катушки' },
-  { id: 'lures',       name: 'Приманки',         icon: '🐟', desc: 'Воблеры, блёсны, силикон и джиг-головки' },
-  { id: 'lines',       name: 'Лески и шнуры',    icon: '🧵', desc: 'Монолеска, плетёные шнуры и флюорокарбон' },
-  { id: 'accessories', name: 'Аксессуары',       icon: '🧰', desc: 'Подсаки, садки, ящики, поводки и мелочёвка' },
+  { id: 'spinning',    name: 'Спиннинги',     icon: '🎣', desc: 'Удилища для ловли хищника на искусственные приманки' },
+  { id: 'reels',       name: 'Катушки',       icon: '🌀', desc: 'Безынерционные катушки для спиннинга и фидера' },
+  { id: 'lines',       name: 'Лески и шнуры', icon: '🧵', desc: 'Монолеска, флюорокарбон и плетёные шнуры' },
+  { id: 'rods',        name: 'Удилища',       icon: '🪝', desc: 'Поплавочные, фидерные и болонские удилища' },
+  { id: 'lures',       name: 'Приманки',      icon: '🐟', desc: 'Воблеры, блёсны, силикон и джиг-головки' },
+  { id: 'accessories', name: 'Аксессуары',    icon: '🧰', desc: 'Подсаки, садки, ящики, поводки и мелочёвка' },
 ];
 
 const PRODUCTS = [
-  // ---------------- Спиннинги ----------------
-  { id: 'sp-01', cat: 'spinning', brand: 'Shimano',  name: 'Спиннинг Shimano Catana FX 2.10 м 3-14 г',      price: 4290,  old: 4990, rating: 4.8, stock: true,  photo: 'fishing,spinning,rod', seed: 101,
-    specs: { 'Длина': '2.10 м', 'Тест': '3–14 г', 'Строй': 'Fast', 'Секций': '2', 'Вес': '128 г' } },
-  { id: 'sp-02', cat: 'spinning', brand: 'Favorite', name: 'Спиннинг Favorite Blue Bird 1.98 м 1-8 г',      price: 5690,  old: 0,    rating: 4.9, stock: true,  photo: 'fishing,rod,ultralight', seed: 102,
-    specs: { 'Длина': '1.98 м', 'Тест': '1–8 г', 'Строй': 'Fast', 'Секций': '2', 'Вес': '96 г' } },
-  { id: 'sp-03', cat: 'spinning', brand: 'Daiwa',    name: 'Спиннинг Daiwa Ninja X 2.40 м 10-40 г',         price: 6790,  old: 7500, rating: 4.7, stock: true,  photo: 'fishing,rod,river', seed: 103,
-    specs: { 'Длина': '2.40 м', 'Тест': '10–40 г', 'Строй': 'Regular Fast', 'Секций': '2', 'Вес': '181 г' } },
-  { id: 'sp-04', cat: 'spinning', brand: 'Maximus',  name: 'Спиннинг Maximus Black Widow 2.70 м 15-50 г',   price: 5290,  old: 0,    rating: 4.6, stock: false, photo: 'fishing,tackle,rod', seed: 104,
-    specs: { 'Длина': '2.70 м', 'Тест': '15–50 г', 'Строй': 'Fast', 'Секций': '2', 'Вес': '196 г' } },
-  { id: 'sp-05', cat: 'spinning', brand: 'Norstream',name: 'Спиннинг Norstream Standard 2.13 м 5-25 г',     price: 7990,  old: 8900, rating: 4.8, stock: true,  photo: 'spinning,fishing,lake', seed: 105,
-    specs: { 'Длина': '2.13 м', 'Тест': '5–25 г', 'Строй': 'Fast', 'Секций': '2', 'Вес': '142 г' } },
-  { id: 'sp-06', cat: 'spinning', brand: 'Aiko',     name: 'Спиннинг Aiko MargO 2.28 м 0.5-5 г',            price: 8490,  old: 0,    rating: 5.0, stock: true,  photo: 'fishing,rod,forest', seed: 106,
-    specs: { 'Длина': '2.28 м', 'Тест': '0.5–5 г', 'Строй': 'Extra Fast', 'Секций': '2', 'Вес': '89 г' } },
+  // ---------------- Спиннинги (реальные фото) ----------------
+  { id: 'sp-01', cat: 'spinning', brand: 'Graphiteleader', name: 'Спиннинг Graphiteleader Vivo 2.13 м 3-15 г', price: 24900, old: 27500, rating: 5.0, stock: true, img: 'sp-01.png',
+    specs: { 'Длина': '2.13 м', 'Тест': '3–15 г', 'Строй': 'Extra Fast', 'Секций': '2', 'Материал': 'Углеволокно', 'Вес': '104 г' } },
+  { id: 'sp-02', cat: 'spinning', brand: 'Daiwa', name: 'Спиннинг Daiwa Crossfire 2.40 м 10-40 г', price: 4990, old: 5690, rating: 4.8, stock: true, img: 'sp-02.jpg',
+    specs: { 'Длина': '2.40 м', 'Тест': '10–40 г', 'Строй': 'Regular Fast', 'Секций': '2', 'Материал': 'Карбон', 'Вес': '178 г' } },
+  { id: 'sp-03', cat: 'spinning', brand: 'Aiko', name: 'Спиннинг Aiko Baltasar 1.86 м 0.6-8 г', price: 5490, old: 0, rating: 4.9, stock: true, img: 'sp-03.jpg',
+    specs: { 'Длина': '1.86 м', 'Тест': '0.6–8 г', 'Строй': 'Fast', 'Секций': '2', 'Класс': 'Ультралайт', 'Вес': '88 г' } },
+  { id: 'sp-04', cat: 'spinning', brand: 'Maximus', name: 'Спиннинг Maximus Wild Power-X 1.98 м 3-15 г', price: 3290, old: 3790, rating: 4.7, stock: true, img: 'sp-04.jpg',
+    specs: { 'Длина': '1.98 м', 'Тест': '3–15 г', 'Строй': 'Fast', 'Секций': '2', 'Класс': 'Лайт', 'Вес': '112 г' } },
 
-  // ---------------- Удилища ----------------
-  { id: 'rd-01', cat: 'rods', brand: 'Salmo',    name: 'Удилище поплавочное Salmo Elite Pole 5.00 м',   price: 2890, old: 3400, rating: 4.7, stock: true,  photo: 'fishing,pole,pond', seed: 201,
+  // ---------------- Катушки (реальные фото) ----------------
+  { id: 'rl-01', cat: 'reels', brand: 'Kaida', name: 'Катушка Kaida SK-7000 карповая', price: 2790, old: 3290, rating: 4.6, stock: true, img: 'rl-01.jpg',
+    specs: { 'Размер': '7000', 'Подшипников': '5', 'Передат. число': '4.7:1', 'Вес': '540 г', 'Назначение': 'Карп / фидер' } },
+  { id: 'rl-02', cat: 'reels', brand: 'RST', name: 'Катушка RST Reflex 3000', price: 3490, old: 0, rating: 4.7, stock: true, img: 'rl-02.jpg',
+    specs: { 'Размер': '3000', 'Подшипников': '6', 'Передат. число': '5.2:1', 'Вес': '265 г', 'Назначение': 'Спиннинг' } },
+  { id: 'rl-03', cat: 'reels', brand: 'SPRO', name: 'Катушка SPRO Blackster 4000', price: 4290, old: 4990, rating: 4.8, stock: true, img: 'rl-03.jpg',
+    specs: { 'Размер': '4000', 'Подшипников': '7', 'Передат. число': '5.1:1', 'Вес': '312 г', 'Назначение': 'Спиннинг / фидер' } },
+  { id: 'rl-04', cat: 'reels', brand: 'Daiwa', name: 'Катушка Daiwa Regal 2500-5iA', price: 6490, old: 7200, rating: 4.9, stock: true, img: 'rl-04.jpg',
+    specs: { 'Размер': '2500', 'Подшипников': '5', 'Передат. число': '5.3:1', 'Вес': '285 г', 'Леска': '0.25/150 м' } },
+  { id: 'rl-05', cat: 'reels', brand: 'Shimano', name: 'Катушка Shimano Twin Power XD 4000', price: 32900, old: 0, rating: 5.0, stock: true, img: 'rl-05.jpg',
+    specs: { 'Размер': '4000', 'Подшипников': '10', 'Передат. число': '5.8:1', 'Вес': '250 г', 'Технология': 'HAGANE / X-Protect' } },
+
+  // ---------------- Лески и шнуры (реальные фото) ----------------
+  { id: 'ln-01', cat: 'lines', brand: 'Петроканат', name: 'Леска Петроканат Uni-Line 0.16 мм 250 г', price: 340, old: 0, rating: 4.7, stock: true, img: 'ln-01.jpg',
+    specs: { 'Диаметр': '0.16 мм', 'Намотка': '10700 м / 250 г', 'Нагрузка': '1.5 кг', 'Тип': 'Монолеска', 'Цвет': 'Прозрачный' } },
+  { id: 'ln-02', cat: 'lines', brand: 'Kosadaka', name: 'Леска Kosadaka Infinity 0.30 мм 100 м', price: 220, old: 0, rating: 4.6, stock: true, img: 'ln-02.jpg',
+    specs: { 'Диаметр': '0.30 мм', 'Длина': '100 м', 'Нагрузка': '7.2 кг', 'Тип': 'Монолеска', 'Память': 'низкая' } },
+  { id: 'ln-03', cat: 'lines', brand: 'Kosadaka', name: 'Плетёный шнур Kosadaka Infinity PE 0.20 мм 150 м', price: 790, old: 950, rating: 4.8, stock: true, img: 'ln-03.jpg',
+    specs: { 'Диаметр': '0.20 мм', 'Длина': '150 м', 'Нагрузка': '12.9 кг', 'Тип': 'Плетёнка (X4)', 'Цвет': 'Голубой' } },
+  { id: 'ln-04', cat: 'lines', brand: 'Azor Fishing', name: 'Леска Azor Fishing 0.35 мм 100 м', price: 150, old: 0, rating: 4.4, stock: true, img: 'ln-04.jpg',
+    specs: { 'Диаметр': '0.35 мм', 'Длина': '100 м', 'Нагрузка': '16.5 кг', 'Тип': 'Монолеска', 'Особенность': 'без перекручиваний' } },
+
+  // ---------------- Удилища (ожидают фото) ----------------
+  { id: 'rd-01', cat: 'rods', brand: 'Salmo', name: 'Удилище поплавочное Salmo Elite Pole 5.00 м', price: 2890, old: 3400, rating: 4.7, stock: true,
     specs: { 'Длина': '5.00 м', 'Тип': 'Маховое', 'Секций': '5', 'Вес': '210 г', 'Тест': 'до 25 г' } },
-  { id: 'rd-02', cat: 'rods', brand: 'Mikado',   name: 'Фидер Mikado Ultraviolet Feeder 3.60 м 120 г',  price: 4590, old: 0,    rating: 4.8, stock: true,  photo: 'feeder,fishing,river', seed: 202,
+  { id: 'rd-02', cat: 'rods', brand: 'Mikado', name: 'Фидер Mikado Ultraviolet Feeder 3.60 м 120 г', price: 4590, old: 0, rating: 4.8, stock: true,
     specs: { 'Длина': '3.60 м', 'Тип': 'Фидер', 'Тест': 'до 120 г', 'Секций': '3+3', 'Вес': '285 г' } },
-  { id: 'rd-03', cat: 'rods', brand: 'Trabucco', name: 'Болонское удилище Trabucco Selesta 6.00 м',     price: 5290, old: 5990, rating: 4.6, stock: true,  photo: 'bolognese,fishing,rod', seed: 203,
+  { id: 'rd-03', cat: 'rods', brand: 'Trabucco', name: 'Болонское удилище Trabucco Selesta 6.00 м', price: 5290, old: 5990, rating: 4.6, stock: true,
     specs: { 'Длина': '6.00 м', 'Тип': 'Болонское', 'Секций': '6', 'Вес': '340 г', 'Тест': '5–25 г' } },
-  { id: 'rd-04', cat: 'rods', brand: 'Nisus',    name: 'Карповое удилище Nisus Carp 3.60 м 3.5 lb',     price: 3990, old: 0,    rating: 4.5, stock: false, photo: 'carp,fishing,rod', seed: 204,
+  { id: 'rd-04', cat: 'rods', brand: 'Nisus', name: 'Карповое удилище Nisus Carp 3.60 м 3.5 lb', price: 3990, old: 0, rating: 4.5, stock: false,
     specs: { 'Длина': '3.60 м', 'Тип': 'Карповое', 'Тест': '3.5 lb', 'Секций': '2', 'Вес': '395 г' } },
 
-  // ---------------- Катушки ----------------
-  { id: 'rl-01', cat: 'reels', brand: 'Shimano', name: 'Катушка Shimano Sedona 2500 FI',                price: 7690, old: 8900, rating: 4.9, stock: true,  photo: 'fishing,reel', seed: 301,
-    specs: { 'Размер': '2500', 'Подшипников': '4', 'Передат. число': '5.0:1', 'Вес': '240 г', 'Леска': '0.25/140 м' } },
-  { id: 'rl-02', cat: 'reels', brand: 'Daiwa',   name: 'Катушка Daiwa Revros LT 3000-C',                price: 6490, old: 0,    rating: 4.8, stock: true,  photo: 'fishing,reel,spinning', seed: 302,
-    specs: { 'Размер': '3000', 'Подшипников': '5', 'Передат. число': '5.3:1', 'Вес': '220 г', 'Леска': '0.28/150 м' } },
-  { id: 'rl-03', cat: 'reels', brand: 'Ryobi',   name: 'Катушка Ryobi Ecusima 2000 Vi',                 price: 3290, old: 3900, rating: 4.6, stock: true,  photo: 'fishing,reel,gear', seed: 303,
-    specs: { 'Размер': '2000', 'Подшипников': '6', 'Передат. число': '5.1:1', 'Вес': '265 г', 'Леска': '0.20/180 м' } },
-  { id: 'rl-04', cat: 'reels', brand: 'Okuma',   name: 'Катушка Okuma Ceymar C-30',                     price: 4890, old: 0,    rating: 4.7, stock: true,  photo: 'reel,fishing,metal', seed: 304,
-    specs: { 'Размер': '3000', 'Подшипников': '8', 'Передат. число': '5.0:1', 'Вес': '272 г', 'Леска': '0.30/120 м' } },
-  { id: 'rl-05', cat: 'reels', brand: 'Abu Garcia', name: 'Мультипликатор Abu Garcia Black Max',        price: 8990, old: 9990, rating: 4.8, stock: false, photo: 'baitcasting,reel,fishing', seed: 305,
-    specs: { 'Тип': 'Мультипликатор', 'Подшипников': '4', 'Передат. число': '6.4:1', 'Вес': '207 г', 'Тормоз': 'до 8 кг' } },
-
-  // ---------------- Приманки ----------------
-  { id: 'lu-01', cat: 'lures', brand: 'Rapala',   name: 'Воблер Rapala Original Floater F07 7 см',      price: 890,  old: 0,    rating: 4.9, stock: true,  photo: 'fishing,lure,wobbler', seed: 401,
+  // ---------------- Приманки (ожидают фото) ----------------
+  { id: 'lu-01', cat: 'lures', brand: 'Rapala', name: 'Воблер Rapala Original Floater F07 7 см', price: 890, old: 0, rating: 4.9, stock: true,
     specs: { 'Длина': '7 см', 'Вес': '4 г', 'Заглубление': '0.9–1.8 м', 'Плавучесть': 'Floating', 'Тип': 'Minnow' } },
-  { id: 'lu-02', cat: 'lures', brand: 'Yo-Zuri',  name: 'Воблер Yo-Zuri 3DS Minnow 70SP',               price: 1290, old: 1490, rating: 4.8, stock: true,  photo: 'fishing,lure,bait', seed: 402,
+  { id: 'lu-02', cat: 'lures', brand: 'Yo-Zuri', name: 'Воблер Yo-Zuri 3DS Minnow 70SP', price: 1290, old: 1490, rating: 4.8, stock: true,
     specs: { 'Длина': '7 см', 'Вес': '5 г', 'Заглубление': '1.0–1.5 м', 'Плавучесть': 'Suspending', 'Тип': 'Minnow' } },
-  { id: 'lu-03', cat: 'lures', brand: 'Mepps',    name: 'Блесна вращающаяся Mepps Aglia №3',            price: 490,  old: 0,    rating: 4.9, stock: true,  photo: 'fishing,spinner,spoon', seed: 403,
+  { id: 'lu-03', cat: 'lures', brand: 'Mepps', name: 'Блесна вращающаяся Mepps Aglia №3', price: 490, old: 0, rating: 4.9, stock: true,
     specs: { 'Размер': '№3', 'Вес': '6.5 г', 'Тип': 'Вертушка', 'Лепесток': 'Aglia', 'Цвет': 'Серебро' } },
-  { id: 'lu-04', cat: 'lures', brand: 'Acme',     name: 'Колеблющаяся блесна Acme Kastmaster 14 г',     price: 640,  old: 0,    rating: 4.7, stock: true,  photo: 'fishing,spoon,metal', seed: 404,
+  { id: 'lu-04', cat: 'lures', brand: 'Acme', name: 'Колеблющаяся блесна Acme Kastmaster 14 г', price: 640, old: 0, rating: 4.7, stock: true,
     specs: { 'Вес': '14 г', 'Тип': 'Колебалка', 'Материал': 'Латунь', 'Дальность': 'высокая', 'Цвет': 'Хром' } },
-  { id: 'lu-05', cat: 'lures', brand: 'Keitech',  name: 'Силикон Keitech Easy Shiner 3" (10 шт)',       price: 590,  old: 720,  rating: 4.9, stock: true,  photo: 'soft,bait,fishing', seed: 405,
+  { id: 'lu-05', cat: 'lures', brand: 'Keitech', name: 'Силикон Keitech Easy Shiner 3" (10 шт)', price: 590, old: 720, rating: 4.9, stock: true,
     specs: { 'Длина': '3"', 'В упаковке': '10 шт', 'Тип': 'Виброхвост', 'Съедобный': 'Да', 'Аромат': 'Кальмар' } },
-  { id: 'lu-06', cat: 'lures', brand: 'Fanatik',  name: 'Джиг-головка Fanatik 10 г (5 шт)',             price: 320,  old: 0,    rating: 4.6, stock: true,  photo: 'jig,fishing,hook', seed: 406,
+  { id: 'lu-06', cat: 'lures', brand: 'Fanatik', name: 'Джиг-головка Fanatik 10 г (5 шт)', price: 320, old: 0, rating: 4.6, stock: true,
     specs: { 'Вес': '10 г', 'В упаковке': '5 шт', 'Крючок': '#2/0', 'Тип': 'Джиг-головка', 'Материал': 'Свинец' } },
-  { id: 'lu-07', cat: 'lures', brand: 'Strike Pro', name: 'Воблер Strike Pro Flap Jack 90 5 см',        price: 1090, old: 1290, rating: 4.7, stock: false, photo: 'crankbait,fishing,lure', seed: 407,
-    specs: { 'Длина': '5 см', 'Вес': '9 г', 'Заглубление': '1.5–3.0 м', 'Плавучесть': 'Floating', 'Тип': 'Crankbait' } },
 
-  // ---------------- Лески и шнуры ----------------
-  { id: 'ln-01', cat: 'lines', brand: 'Power Pro', name: 'Плетёный шнур Power Pro 0.19 мм 135 м',        price: 1490, old: 1790, rating: 4.9, stock: true,  photo: 'fishing,line,braid', seed: 501,
-    specs: { 'Диаметр': '0.19 мм', 'Длина': '135 м', 'Нагрузка': '13 кг', 'Тип': 'Плетёнка', 'Цвет': 'Мох' } },
-  { id: 'ln-02', cat: 'lines', brand: 'Sunline',   name: 'Флюорокарбон Sunline FC 0.28 мм 50 м',         price: 990,  old: 0,    rating: 4.8, stock: true,  photo: 'fishing,line,spool', seed: 502,
-    specs: { 'Диаметр': '0.28 мм', 'Длина': '50 м', 'Нагрузка': '5.5 кг', 'Тип': 'Флюорокарбон', 'Незаметность': 'высокая' } },
-  { id: 'ln-03', cat: 'lines', brand: 'Salmo',     name: 'Монолеска Salmo Diamond 0.25 мм 150 м',        price: 340,  old: 0,    rating: 4.6, stock: true,  photo: 'fishing,line,nylon', seed: 503,
-    specs: { 'Диаметр': '0.25 мм', 'Длина': '150 м', 'Нагрузка': '6.4 кг', 'Тип': 'Монолеска', 'Цвет': 'Прозрачный' } },
-  { id: 'ln-04', cat: 'lines', brand: 'Varivas',   name: 'Плетёный шнур Varivas Avani 0.13 мм 150 м',    price: 2290, old: 2590, rating: 5.0, stock: false, photo: 'braid,fishing,line', seed: 504,
-    specs: { 'Диаметр': '0.13 мм', 'Длина': '150 м', 'Нагрузка': '9 кг', 'Тип': 'Плетёнка', 'Цвет': 'Жёлтый' } },
-
-  // ---------------- Аксессуары ----------------
-  { id: 'ac-01', cat: 'accessories', brand: 'Cottus',   name: 'Подсак телескопический Cottus 2.0 м',    price: 1490, old: 0,    rating: 4.7, stock: true,  photo: 'fishing,net,landing', seed: 601,
+  // ---------------- Аксессуары (ожидают фото) ----------------
+  { id: 'ac-01', cat: 'accessories', brand: 'Cottus', name: 'Подсак телескопический Cottus 2.0 м', price: 1490, old: 0, rating: 4.7, stock: true,
     specs: { 'Длина ручки': '2.0 м', 'Голова': '50×40 см', 'Сетка': 'нейлон', 'Складной': 'Да', 'Вес': '380 г' } },
-  { id: 'ac-02', cat: 'accessories', brand: 'Plano',    name: 'Ящик-рыболовный Plano 3700 двусторонний', price: 2190, old: 2590, rating: 4.9, stock: true,  photo: 'tackle,box,fishing', seed: 602,
+  { id: 'ac-02', cat: 'accessories', brand: 'Plano', name: 'Ящик рыболовный Plano 3700 двусторонний', price: 2190, old: 2590, rating: 4.9, stock: true,
     specs: { 'Размер': '35×22×8 см', 'Секций': '20+', 'Материал': 'Пластик', 'Влагозащита': 'Да', 'Вес': '640 г' } },
-  { id: 'ac-03', cat: 'accessories', brand: 'Aquatic',  name: 'Садок прорезиненный Aquatic 3.0 м',       price: 1290, old: 0,    rating: 4.6, stock: true,  photo: 'fishing,keepnet,bag', seed: 603,
+  { id: 'ac-03', cat: 'accessories', brand: 'Aquatic', name: 'Садок прорезиненный Aquatic 3.0 м', price: 1290, old: 0, rating: 4.6, stock: true,
     specs: { 'Длина': '3.0 м', 'Диаметр': '40 см', 'Материал': 'ПВХ-сетка', 'Колец': '8', 'Чехол': 'В комплекте' } },
-  { id: 'ac-04', cat: 'accessories', brand: 'Owner',    name: 'Крючки Owner 50922 №8 (10 шт)',           price: 290,  old: 0,    rating: 4.9, stock: true,  photo: 'fishing,hooks,tackle', seed: 604,
+  { id: 'ac-04', cat: 'accessories', brand: 'Owner', name: 'Крючки Owner 50922 №8 (10 шт)', price: 290, old: 0, rating: 4.9, stock: true,
     specs: { 'Размер': '№8', 'В упаковке': '10 шт', 'Тип': 'С ушком', 'Покрытие': 'Никель', 'Заточка': 'химическая' } },
-  { id: 'ac-05', cat: 'accessories', brand: 'Kosadaka', name: 'Поводковый материал Kosadaka 7×7 12 кг',  price: 390,  old: 0,    rating: 4.5, stock: true,  photo: 'fishing,leader,wire', seed: 605,
+  { id: 'ac-05', cat: 'accessories', brand: 'Kosadaka', name: 'Поводковый материал Kosadaka 7×7 12 кг', price: 390, old: 0, rating: 4.5, stock: true,
     specs: { 'Нагрузка': '12 кг', 'Длина': '5 м', 'Плетение': '7×7', 'Тип': 'Стальной', 'Оболочка': 'нейлон' } },
-  { id: 'ac-06', cat: 'accessories', brand: 'Rapala',   name: 'Пассатижи рыболовные Rapala 15 см',        price: 1690, old: 1990, rating: 4.8, stock: false, photo: 'fishing,pliers,tool', seed: 606,
-    specs: { 'Длина': '15 см', 'Материал': 'Нержавейка', 'Кусачки': 'Да', 'Чехол': 'В комплекте', 'Вес': '145 г' } },
 ];
 
-// Реальные фото товара: сервис отдаёт снимок с Flickr по ключевым словам,
-// seed фиксирует конкретное фото за карточкой.
-function photoUrl(product, w = 600, h = 450) {
-  return `https://loremflickr.com/${w}/${h}/${encodeURIComponent(product.photo)}?lock=${product.seed}`;
+// Путь к фото: реальный файл в assets/img или фирменная заглушка (для товаров без фото).
+function photoUrl(product) {
+  return product.img ? `assets/img/${product.img}` : productFallback(product);
+}
+
+const CAT_EMOJI = {
+  spinning: '🎣', reels: '🌀', lines: '🧵',
+  rods: '🪝', lures: '🐟', accessories: '🧰',
+};
+
+// Фирменная заглушка (тёмно-зелёный + чёрный, без жёлтого).
+function productFallback(product) {
+  const emoji = CAT_EMOJI[product.cat] || '🎣';
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="450">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#14493a"/>
+          <stop offset="0.55" stop-color="#0d3629"/>
+          <stop offset="1" stop-color="#081c16"/>
+        </linearGradient>
+      </defs>
+      <rect width="600" height="450" fill="url(#g)"/>
+      <path d="M0 330 Q150 300 300 330 T600 330" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="3"/>
+      <path d="M0 372 Q150 342 300 372 T600 372" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="3"/>
+      <circle cx="300" cy="196" r="72" fill="#ffffff" fill-opacity="0.05" stroke="#8fbfa8" stroke-opacity="0.5" stroke-width="2"/>
+      <text x="300" y="220" font-size="66" text-anchor="middle">${emoji}</text>
+      <text x="300" y="310" font-size="25" fill="#eaf3ee" text-anchor="middle" font-family="Segoe UI, sans-serif" font-weight="bold">${product.brand}</text>
+      <text x="300" y="342" font-size="14" fill="#8fbfa8" text-anchor="middle" font-family="Segoe UI, sans-serif" letter-spacing="1">РЫБОЛОВ · фото уточняется</text>
+    </svg>`;
+  return 'data:image/svg+xml,' + encodeURIComponent(svg);
 }

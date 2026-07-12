@@ -12,13 +12,8 @@
   const $ = (sel) => document.querySelector(sel);
   const fmt = (n) => new Intl.NumberFormat('ru-RU').format(n) + ' ₽';
 
-  // SVG-заглушка, если реальное фото не подгрузилось
-  const FALLBACK = 'data:image/svg+xml,' + encodeURIComponent(
-    `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300">
-      <rect width="400" height="300" fill="#e8eef1"/>
-      <text x="50%" y="46%" font-size="64" text-anchor="middle">🎣</text>
-      <text x="50%" y="66%" font-size="18" fill="#5c6f79" text-anchor="middle" font-family="sans-serif">Фото загружается…</text>
-    </svg>`);
+  // Атрибут onerror: если файла фото ещё нет — показываем фирменную заглушку.
+  const imgFallback = (p) => `this.onerror=null;this.src='${productFallback(p)}'`;
 
   /* ---------- Категории ---------- */
   function renderCategories() {
@@ -97,8 +92,8 @@
       return `<article class="card" data-id="${p.id}">
         <div class="card__media" data-open="${p.id}">
           <img class="card__img" loading="lazy" alt="${p.name}"
-               src="${photoUrl(p, 400, 300)}"
-               onerror="this.onerror=null;this.src='${FALLBACK}'">
+               src="${photoUrl(p)}"
+               onerror="${imgFallback(p)}">
           ${discount}${out}
         </div>
         <div class="card__body">
@@ -131,8 +126,8 @@
     $('#modalCard').innerHTML = `
       <button class="modal__close" id="modalClose" aria-label="Закрыть">✕</button>
       <div class="modal__grid">
-        <img class="modal__img" alt="${p.name}" src="${photoUrl(p, 700, 700)}"
-             onerror="this.onerror=null;this.src='${FALLBACK}'">
+        <img class="modal__img" alt="${p.name}" src="${photoUrl(p)}"
+             onerror="${imgFallback(p)}">
         <div class="modal__info">
           <span class="modal__brand">${p.brand}</span>
           <h2 class="modal__title">${p.name}</h2>
@@ -197,8 +192,8 @@
         if (!p) return '';
         const q = state.cart[id];
         return `<div class="cart-item">
-          <img class="cart-item__img" alt="${p.name}" src="${photoUrl(p, 120, 120)}"
-               onerror="this.onerror=null;this.src='${FALLBACK}'">
+          <img class="cart-item__img" alt="${p.name}" src="${photoUrl(p)}"
+               onerror="${imgFallback(p)}">
           <div class="cart-item__info">
             <div class="cart-item__name">${p.name}</div>
             <div class="cart-item__price">${fmt(p.price * q)}</div>

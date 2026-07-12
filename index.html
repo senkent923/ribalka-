@@ -3,51 +3,61 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Клёвое место — рыболовный магазин-каталог в Санкт-Петербурге. Спиннинги, катушки, воблеры, лески и снасти по реальным ценам.">
-  <title>Клёвое место — рыболовный магазин в Санкт-Петербурге</title>
-  <link rel="preconnect" href="https://loremflickr.com">
+  <meta name="description" content="РЫБОЛОВ — рыболовный магазин в Санкт-Петербурге. Спиннинги, удочки, катушки, воблеры, лески и снасти для рыбалки по реальным ценам.">
+  <title>РЫБОЛОВ — магазин снастей для рыбалки в Санкт-Петербурге</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎣</text></svg>">
 </head>
 <body>
+  <a id="top"></a>
+
+  <!-- Верхняя плашка -->
+  <div class="topbar">
+    <div class="container topbar__inner">
+      <span>🚚 Бесплатная доставка по Санкт-Петербургу от 3000 ₽</span>
+      <span class="topbar__phone">📞 <a href="tel:+78121234567">+7 (812) 123-45-67</a></span>
+    </div>
+  </div>
+
   <!-- Шапка -->
   <header class="header">
     <div class="container header__inner">
       <a href="#top" class="logo">
         <span class="logo__icon">🎣</span>
-        <span class="logo__text">Клёвое<span>место</span></span>
+        <span class="logo__text">РЫБО<span>ЛОВ</span></span>
+        <span class="logo__sub">снасти для рыбалки · СПб</span>
       </a>
 
       <div class="search">
-        <input type="search" id="searchInput" class="search__input" placeholder="Поиск: спиннинг, катушка, воблер…" autocomplete="off">
-        <button class="search__btn" id="searchBtn" aria-label="Искать">🔍</button>
+        <input type="search" id="searchInput" class="search__input" placeholder="Найти снасть: спиннинг, катушка, воблер…" autocomplete="off">
+        <button class="search__btn" id="searchBtn" aria-label="Искать">Найти</button>
       </div>
 
       <div class="header__actions">
-        <a href="#contacts" class="header__city">📍 Санкт-Петербург</a>
         <button class="cart-toggle" id="cartToggle" aria-label="Корзина">
-          🛒 <span class="cart-toggle__count" id="cartCount">0</span>
+          <span class="cart-toggle__ico">🛒</span>
+          <span class="cart-toggle__label">Корзина</span>
+          <span class="cart-toggle__count" id="cartCount">0</span>
         </button>
       </div>
     </div>
   </header>
 
-  <a id="top"></a>
-
   <!-- Герой -->
   <section class="hero">
+    <div class="hero__waves" aria-hidden="true"></div>
     <div class="container hero__inner">
       <div class="hero__content">
-        <p class="hero__eyebrow">Рыболовный магазин №1 в Питере</p>
-        <h1 class="hero__title">Всё для рыбалки<br>в одном месте</h1>
-        <p class="hero__text">Спиннинги, катушки, воблеры, лески и снасти от проверенных брендов. Реальные фото, честные цены, доставка по всей России.</p>
+        <p class="hero__eyebrow">🐟 Рыболовный магазин №1 в Санкт-Петербурге</p>
+        <h1 class="hero__title">Всё для рыбалки —<br>от поплавка<br>до трофея</h1>
+        <p class="hero__text">Спиннинги, удочки, катушки, воблеры, блёсны и снасти от проверенных брендов. Реальные фото, честные цены, доставка по всей России.</p>
         <div class="hero__actions">
-          <a href="#catalog" class="btn btn--primary">Перейти в каталог</a>
+          <a href="#catalog" class="btn btn--primary">🎣 В каталог снастей</a>
           <a href="#contacts" class="btn btn--ghost">Как нас найти</a>
         </div>
         <div class="hero__stats">
-          <div><b id="statCount">0</b><span>товаров в наличии</span></div>
-          <div><b>12</b><span>брендов</span></div>
+          <div><b id="statCount">0</b><span>снастей в наличии</span></div>
+          <div><b>12</b><span>мировых брендов</span></div>
           <div><b>4.8★</b><span>средний рейтинг</span></div>
         </div>
       </div>
@@ -57,7 +67,10 @@
   <!-- Категории -->
   <section class="cats" id="categories">
     <div class="container">
-      <h2 class="section-title">Категории</h2>
+      <div class="section-head">
+        <h2 class="section-title">Категории снастей</h2>
+        <p class="section-sub">Выберите, что нужно для вашей рыбалки</p>
+      </div>
       <div class="cats__grid" id="catsGrid"></div>
     </div>
   </section>
@@ -65,23 +78,24 @@
   <!-- Каталог -->
   <section class="catalog" id="catalog">
     <div class="container">
-      <div class="catalog__head">
+      <div class="section-head">
         <h2 class="section-title">Каталог снастей</h2>
-        <div class="catalog__tools">
-          <div class="filters" id="filters"></div>
-          <select id="sortSelect" class="select">
-            <option value="popular">По популярности</option>
-            <option value="price-asc">Сначала дешёвые</option>
-            <option value="price-desc">Сначала дорогие</option>
-            <option value="rating">По рейтингу</option>
-          </select>
-        </div>
+        <p class="section-sub">Реальные товары, характеристики и цены</p>
+      </div>
+      <div class="catalog__tools">
+        <div class="filters" id="filters"></div>
+        <select id="sortSelect" class="select">
+          <option value="popular">По популярности</option>
+          <option value="price-asc">Сначала дешёвые</option>
+          <option value="price-desc">Сначала дорогие</option>
+          <option value="rating">По рейтингу</option>
+        </select>
       </div>
       <p class="catalog__meta" id="catalogMeta"></p>
       <div class="products" id="products"></div>
       <div class="empty" id="empty" hidden>
         <p>😕 По вашему запросу ничего не найдено.</p>
-        <button class="btn btn--ghost" id="resetBtn">Сбросить фильтры</button>
+        <button class="btn btn--ghost btn--dark" id="resetBtn">Сбросить фильтры</button>
       </div>
     </div>
   </section>
@@ -89,10 +103,10 @@
   <!-- Преимущества -->
   <section class="features">
     <div class="container features__grid">
-      <div class="feature"><span>🚚</span><h3>Доставка по РФ</h3><p>СДЭК, Почта России и курьер по Санкт-Петербургу за 1 день.</p></div>
-      <div class="feature"><span>✅</span><h3>Только оригинал</h3><p>Работаем напрямую с брендами. Гарантия на все снасти.</p></div>
-      <div class="feature"><span>💬</span><h3>Совет эксперта</h3><p>Поможем подобрать снасть под водоём и способ ловли.</p></div>
-      <div class="feature"><span>💳</span><h3>Удобная оплата</h3><p>Карта, СБП, наличные при получении. Рассрочка от 4 месяцев.</p></div>
+      <div class="feature"><span class="feature__ico">🚚</span><h3>Доставка по России</h3><p>СДЭК, Почта России и курьер по Санкт-Петербургу за 1 день.</p></div>
+      <div class="feature"><span class="feature__ico">✅</span><h3>Только оригинал</h3><p>Работаем напрямую с брендами. Гарантия на все снасти.</p></div>
+      <div class="feature"><span class="feature__ico">🎣</span><h3>Совет рыбака</h3><p>Поможем подобрать снасть под водоём и способ ловли.</p></div>
+      <div class="feature"><span class="feature__ico">💳</span><h3>Удобная оплата</h3><p>Карта, СБП, наличные при получении. Рассрочка от 4 месяцев.</p></div>
     </div>
   </section>
 
@@ -100,19 +114,23 @@
   <section class="contacts" id="contacts">
     <div class="container contacts__grid">
       <div>
-        <h2 class="section-title">Приходите в гости</h2>
+        <div class="section-head section-head--left">
+          <h2 class="section-title">Приходите в гости</h2>
+          <p class="section-sub">Северная столица рыбалки на Неве и Финском заливе</p>
+        </div>
         <ul class="contacts__list">
-          <li>📍 <b>Адрес:</b> Санкт-Петербург, Лиговский пр-т, 50, ТК «Рыбацкий двор»</li>
-          <li>🕗 <b>Часы работы:</b> ежедневно с 09:00 до 21:00</li>
-          <li>📞 <b>Телефон:</b> <a href="tel:+78121234567">+7 (812) 123-45-67</a></li>
-          <li>✉️ <b>Почта:</b> <a href="mailto:info@klevoe-mesto.spb.ru">info@klevoe-mesto.spb.ru</a></li>
-          <li>🚇 <b>Метро:</b> «Лиговский проспект», 5 минут пешком</li>
+          <li><span>📍</span><div><b>Адрес</b>Санкт-Петербург, Лиговский пр-т, 50, ТК «Рыбацкий двор»</div></li>
+          <li><span>🕗</span><div><b>Часы работы</b>ежедневно с 09:00 до 21:00</div></li>
+          <li><span>📞</span><div><b>Телефон</b><a href="tel:+78121234567">+7 (812) 123-45-67</a></div></li>
+          <li><span>✉️</span><div><b>Почта</b><a href="mailto:info@rybolov.spb.ru">info@rybolov.spb.ru</a></div></li>
+          <li><span>🚇</span><div><b>Метро</b>«Лиговский проспект», 5 минут пешком</div></li>
         </ul>
       </div>
       <div class="map-card">
         <div class="map-card__pin">📍</div>
-        <p><b>Санкт-Петербург</b><br>Лиговский проспект, 50</p>
-        <span>Северная столица рыбалки на Неве и Финском заливе</span>
+        <p class="map-card__city">Санкт-Петербург</p>
+        <p class="map-card__addr">Лиговский проспект, 50</p>
+        <span class="map-card__note">Ждём вас за снастями каждый день с 9 утра</span>
       </div>
     </div>
   </section>
@@ -120,8 +138,11 @@
   <!-- Подвал -->
   <footer class="footer">
     <div class="container footer__inner">
-      <span class="logo"><span class="logo__icon">🎣</span><span class="logo__text">Клёвое<span>место</span></span></span>
-      <p>© 2026 «Клёвое место», Санкт-Петербург. Всё для рыбалки.</p>
+      <a href="#top" class="logo logo--footer">
+        <span class="logo__icon">🎣</span>
+        <span class="logo__text">РЫБО<span>ЛОВ</span></span>
+      </a>
+      <p class="footer__note">© 2026 «РЫБОЛОВ», Санкт-Петербург. Всё для рыбалки — от поплавка до трофея.</p>
     </div>
   </footer>
 
@@ -130,7 +151,7 @@
     <div class="drawer__overlay" id="cartOverlay"></div>
     <aside class="drawer__panel">
       <div class="drawer__head">
-        <h3>Корзина</h3>
+        <h3>🛒 Корзина</h3>
         <button class="drawer__close" id="cartClose" aria-label="Закрыть">✕</button>
       </div>
       <div class="drawer__body" id="cartItems"></div>
