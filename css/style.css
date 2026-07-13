@@ -617,10 +617,12 @@ textarea.input { resize: vertical; font-family: inherit; line-height: 1.5; }
 @media (max-width: 720px) {
   .topbar__item, .topbar__item--mid { display: none; }
   .topbar__inner { justify-content: center; }
-  .header__inner { flex-wrap: wrap; }
-  .search { order: 3; width: 100%; max-width: none; }
+  .header__inner { flex-wrap: nowrap; gap: 8px; }
+  .header__actions { gap: 6px; }
+  .header__search .search { width: 100%; max-width: none; }
   .icon-btn__label { display: none; }
-  .icon-btn { padding: 11px 13px; }
+  .icon-btn, .cart-toggle { padding: 9px 10px; }
+  .nav-toggle { padding: 6px 6px; }
   /* На телефоне — отдельное вертикальное фото героя */
   .hero__card { min-height: 0; background-image: url("../assets/img/hero-mobile.jpeg"); background-position: center 28%; }
   .hero__inner { padding: 220px 24px 40px; }
@@ -628,7 +630,13 @@ textarea.input { resize: vertical; font-family: inherit; line-height: 1.5; }
   .seal { display: none; }
   .hero__stats { gap: 26px; }
   .account__stats { grid-template-columns: 1fr 1fr; }
-  .logo--emblem .logo__img { height: 46px; }
+  .logo--emblem .logo__img { height: 42px; }
+}
+@media (max-width: 400px) {
+  .icon-btn, .cart-toggle { padding: 8px; }
+  .header__actions { gap: 5px; }
+  .logo--emblem .logo__img { height: 38px; }
+  .ic { width: 19px; height: 19px; }
 }
 
 /* ===== Адаптив: навигация и страницы ===== */
