@@ -547,8 +547,8 @@ textarea.input { resize: vertical; font-family: inherit; line-height: 1.5; }
   .search { order: 3; width: 100%; max-width: none; }
   .icon-btn__label { display: none; }
   .icon-btn { padding: 11px 13px; }
-  /* На телефоне — отдельное фото героя (hero-mobile.webp) */
-  .hero__card { min-height: 0; background-image: url("../assets/img/hero-mobile.webp"); background-position: center 30%; }
+  /* На телефоне — отдельное вертикальное фото героя */
+  .hero__card { min-height: 0; background-image: url("../assets/img/hero-mobile.jpeg"); background-position: center 28%; }
   .hero__inner { padding: 220px 24px 40px; }
   .hero__card::before { background: linear-gradient(180deg, rgba(8,12,10,.12) 0%, rgba(8,12,10,.5) 40%, rgba(8,12,10,.9) 72%, rgba(8,12,10,.98) 100%); }
   .seal { display: none; }
