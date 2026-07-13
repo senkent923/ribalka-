@@ -630,12 +630,13 @@ textarea.input { resize: vertical; font-family: inherit; line-height: 1.5; }
   .seal { display: none; }
   .hero__stats { gap: 26px; }
   .account__stats { grid-template-columns: 1fr 1fr; }
-  .logo--emblem .logo__img { height: 42px; }
+  .logo--emblem .logo__img { height: 58px; }
+  .header.is-scrolled .logo--emblem .logo__img { height: 48px; }
 }
 @media (max-width: 400px) {
   .icon-btn, .cart-toggle { padding: 8px; }
   .header__actions { gap: 5px; }
-  .logo--emblem .logo__img { height: 38px; }
+  .logo--emblem .logo__img { height: 50px; }
   .ic { width: 19px; height: 19px; }
 }
 
