@@ -201,6 +201,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(258px, 1fr)); gap: 22px; }
 
 .card {
+  position: relative;
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
   overflow: hidden; display: flex; flex-direction: column;
   transition: transform .18s ease, box-shadow .26s ease, border-color .2s;
@@ -224,7 +225,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .card__fav.is-active { color: #d9636f; background: #fff; }
 .card__body { padding: 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
 .card__brand { font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; color: var(--gold); font-weight: 700; }
-.card__name { font-size: .95rem; font-weight: 600; line-height: 1.4; color: var(--text); cursor: pointer; }
+.card__name { display: block; font-size: .95rem; font-weight: 600; line-height: 1.4; color: var(--text); cursor: pointer; }
 .card__name:hover { color: var(--gold-br); }
 .card__rating { font-size: .82rem; color: var(--gold); font-weight: 700; }
 .card__rating span { color: var(--text-soft); font-weight: 500; }
@@ -526,6 +527,30 @@ textarea.input { resize: vertical; font-family: inherit; line-height: 1.5; }
 #ckSubmit { margin-top: 18px; }
 .confirm__check--lock { background: linear-gradient(140deg, var(--gold-br), var(--gold-dk)); font-size: 1.8rem; }
 
+/* ===== Страница товара ===== */
+.product-page { padding: 40px 0 10px; }
+.product { display: grid; grid-template-columns: 1fr 1fr; gap: 46px; margin-top: 22px; align-items: start; }
+.product__media { position: relative; background: var(--tile); border: 1px solid var(--line); border-radius: var(--radius); aspect-ratio: 1/1; display: grid; place-items: center; padding: 34px; }
+.product__media img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.product__media .card__badge { position: absolute; top: 16px; left: 16px; }
+.product__brand { color: var(--gold); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: .8rem; }
+.product__title { font-family: var(--serif); font-size: clamp(1.6rem, 3vw, 2.3rem); font-weight: 600; color: var(--text); margin: 10px 0 14px; line-height: 1.15; }
+.product__rating { color: var(--gold); font-weight: 700; }
+.product__rating span { color: var(--text-soft); font-weight: 500; }
+.product__price { font-family: var(--serif); font-size: 2.3rem; font-weight: 600; color: var(--gold-br); margin: 18px 0; }
+.product__price s { font-size: 1.2rem; color: var(--text-dim); font-weight: 400; margin-left: 12px; }
+.product__desc { color: var(--text-soft); font-size: 1.06rem; line-height: 1.75; margin-bottom: 24px; }
+.product__specs { list-style: none; display: grid; gap: 2px; margin-bottom: 26px; }
+.product__specs li { display: flex; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid var(--line-2); font-size: .92rem; }
+.product__specs span { color: var(--text-soft); }
+.product__specs b { color: var(--text); font-weight: 700; }
+.product__actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+.product__actions .btn { flex: 1; min-width: 170px; }
+.product__perks { display: grid; gap: 9px; padding-top: 20px; border-top: 1px solid var(--line); }
+.product__perks span { color: var(--text-soft); font-size: .9rem; }
+.notfound { text-align: center; padding: 90px 0; display: grid; gap: 16px; place-items: center; }
+.notfound h1 { font-family: var(--serif); color: var(--text); }
+
 /* ===== Акции: промо-баннер ===== */
 .promo { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
   background: linear-gradient(135deg, rgba(201,169,97,.16), rgba(201,169,97,.03)); border: 1px solid var(--line);
@@ -565,6 +590,7 @@ textarea.input { resize: vertical; font-family: inherit; line-height: 1.5; }
 }
 @media (max-width: 880px) {
   .contacts__grid { grid-template-columns: 1fr; }
+  .product { grid-template-columns: 1fr; gap: 26px; }
   .modal__grid { grid-template-columns: 1fr; }
   .modal__img { min-height: 260px; }
   .section-head--row { flex-direction: column; align-items: flex-start; gap: 10px; }

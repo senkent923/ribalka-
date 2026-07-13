@@ -26,15 +26,16 @@
     const hit = p.rating >= 4.9 && p.stock ? `<span class="card__badge card__badge--hit">Хит</span>` : '';
     const out = !p.stock ? `<span class="card__badge card__badge--out">Нет в наличии</span>` : '';
     const fav = state.fav.includes(p.id);
+    const href = `product.html?id=${p.id}`;
     return `<article class="card" data-id="${p.id}">
-      <div class="card__media" data-open="${p.id}">
+      <button class="card__fav ${fav ? 'is-active' : ''}" data-fav="${p.id}" aria-label="В избранное">♥</button>
+      <a class="card__media" href="${href}">
         <img class="card__img" loading="lazy" alt="${esc(p.name)}" src="${photoUrl(p)}" onerror="${imgFallback(p)}">
         ${disc || hit}${out}
-        <button class="card__fav ${fav ? 'is-active' : ''}" data-fav="${p.id}" aria-label="В избранное">♥</button>
-      </div>
+      </a>
       <div class="card__body">
         <span class="card__brand">${esc(p.brand)}</span>
-        <h3 class="card__name" data-open="${p.id}">${esc(p.name)}</h3>
+        <a class="card__name" href="${href}">${esc(p.name)}</a>
         <div class="card__rating">★ ${p.rating.toFixed(1)} <span>· ${p.stock ? 'в наличии' : 'под заказ'}</span></div>
         <div class="card__price-row"><span class="card__price">${fmt(p.price)}</span>${p.old > p.price ? `<span class="card__old">${fmt(p.old)}</span>` : ''}</div>
         <button class="card__btn" data-add="${p.id}" ${p.stock ? '' : 'disabled'}>${p.stock ? 'В корзину' : 'Нет в наличии'}</button>
@@ -42,9 +43,8 @@
     </article>`;
   }
   function wireCards(c) {
-    c.querySelectorAll('[data-add]').forEach((el) => el.addEventListener('click', (e) => { e.stopPropagation(); addToCart(el.dataset.add); }));
-    c.querySelectorAll('[data-fav]').forEach((el) => el.addEventListener('click', (e) => { e.stopPropagation(); toggleFav(el.dataset.fav); }));
-    c.querySelectorAll('[data-open]').forEach((el) => el.addEventListener('click', () => openModal(el.dataset.open)));
+    c.querySelectorAll('[data-add]').forEach((el) => el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); addToCart(el.dataset.add); }));
+    c.querySelectorAll('[data-fav]').forEach((el) => el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); toggleFav(el.dataset.fav); }));
   }
 
   /* ---------- Хиты (главная) ---------- */
@@ -144,31 +144,46 @@
     wrap.innerHTML = list.map(cardMarkup).join(''); wireCards(wrap);
   }
 
-  /* ---------- Модалка товара ---------- */
-  function openModal(id) {
-    const p = PRODUCTS.find((x) => x.id === id); if (!p) return;
+  /* ---------- Страница товара (product.html?id=) ---------- */
+  function renderProductPage() {
+    const wrap = $('#productPage'); if (!wrap) return;
+    const id = new URLSearchParams(location.search).get('id');
+    const p = PRODUCTS.find((x) => x.id === id);
+    if (!p) {
+      wrap.innerHTML = `<div class="notfound"><h1>Товар не найден</h1><p>Возможно, он больше не в каталоге.</p><a class="btn btn--primary" href="catalog.html">В каталог →</a></div>`;
+      return;
+    }
+    document.title = `${p.name} — РЫБОЛОВ`;
+    const cat = CATEGORIES.find((c) => c.id === p.cat) || {};
     const fav = state.fav.includes(p.id);
+    const disc = p.old > p.price ? `<span class="card__badge">−${Math.round((1 - p.price / p.old) * 100)}%</span>` : '';
     const specs = Object.entries(p.specs).map(([k, v]) => `<li><span>${esc(k)}</span><b>${esc(v)}</b></li>`).join('');
-    $('#modalCard').innerHTML = `
-      <button class="modal__close" id="modalClose" aria-label="Закрыть">✕</button>
-      <div class="modal__grid">
-        <img class="modal__img" alt="${esc(p.name)}" src="${photoUrl(p)}" onerror="${imgFallback(p)}">
-        <div class="modal__info">
-          <span class="modal__brand">${esc(p.brand)}</span>
-          <h2 class="modal__title">${esc(p.name)}</h2>
-          <div class="card__rating">★ ${p.rating.toFixed(1)} · ${p.stock ? 'В наличии' : 'Под заказ'}</div>
-          <ul class="modal__specs">${specs}</ul>
-          <div class="modal__price">${fmt(p.price)} ${p.old > p.price ? `<s>${fmt(p.old)}</s>` : ''}</div>
-          <div class="modal__actions">
-            <button class="btn btn--primary" data-add="${p.id}" ${p.stock ? '' : 'disabled'}>${p.stock ? '🛒 В корзину' : 'Нет в наличии'}</button>
-            <button class="btn btn--fav ${fav ? 'is-active' : ''}" data-fav="${p.id}">♥ ${fav ? 'В избранном' : 'В избранное'}</button>
+    wrap.innerHTML = `
+      <nav class="crumbs"><a href="index.html">Главная</a> <span>/</span> <a href="catalog.html">Каталог</a> <span>/</span> <a href="catalog.html?cat=${p.cat}">${esc(cat.name || '')}</a> <span>/</span> ${esc(p.name)}</nav>
+      <div class="product">
+        <div class="product__media"><img src="${photoUrl(p)}" alt="${esc(p.name)}" onerror="${imgFallback(p)}">${disc}</div>
+        <div class="product__info">
+          <span class="product__brand">${esc(p.brand)}</span>
+          <h1 class="product__title">${esc(p.name)}</h1>
+          <div class="product__rating">★ ${p.rating.toFixed(1)} <span>· ${p.stock ? 'в наличии' : 'под заказ'}</span></div>
+          <div class="product__price">${fmt(p.price)} ${p.old > p.price ? `<s>${fmt(p.old)}</s>` : ''}</div>
+          <p class="product__desc">${esc(productDesc(p))}</p>
+          <ul class="product__specs">${specs}</ul>
+          <div class="product__actions">
+            <button class="btn btn--primary" id="ppAdd" ${p.stock ? '' : 'disabled'}>🛒 В корзину</button>
+            <button class="btn btn--fav ${fav ? 'is-active' : ''}" id="ppFav">♥ ${fav ? 'В избранном' : 'В избранное'}</button>
+          </div>
+          <div class="product__perks">
+            <span>🚚 Доставка по России за 1–3 дня</span>
+            <span>✅ Оригинал с гарантией производителя</span>
+            <span>💳 Оплата картой онлайн или при получении</span>
           </div>
         </div>
       </div>`;
-    $('#productModal').hidden = false; document.body.style.overflow = 'hidden';
-    $('#modalClose').addEventListener('click', closeModal);
-    $('#modalCard [data-add]')?.addEventListener('click', () => { addToCart(id); closeModal(); });
-    $('#modalCard [data-fav]')?.addEventListener('click', () => { toggleFav(id); openModal(id); });
+    $('#ppAdd')?.addEventListener('click', () => addToCart(p.id));
+    $('#ppFav')?.addEventListener('click', () => { toggleFav(p.id); renderProductPage(); });
+    const rel = PRODUCTS.filter((x) => x.cat === p.cat && x.id !== p.id).slice(0, 4);
+    if (rel.length && $('#relatedGrid')) { $('#relatedGrid').innerHTML = rel.map(cardMarkup).join(''); wireCards($('#relatedGrid')); $('#relatedSec').hidden = false; }
   }
   function closeModal() { $('#productModal').hidden = true; document.body.style.overflow = ''; }
 
@@ -482,8 +497,9 @@
       $('#resetBtn')?.addEventListener('click', resetAll);
     }
 
-    // кабинет
+    // кабинет + страница товара
     renderAccount();
+    renderProductPage();
 
     // корзина / модалки (везде)
     $('#cartToggle')?.addEventListener('click', openCart);
