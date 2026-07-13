@@ -28,7 +28,7 @@
     const fav = state.fav.includes(p.id);
     const href = `product.html?id=${p.id}`;
     return `<article class="card" data-id="${p.id}">
-      <button class="card__fav ${fav ? 'is-active' : ''}" data-fav="${p.id}" aria-label="В избранное">♥</button>
+      <button class="card__fav ${fav ? 'is-active' : ''}" data-fav="${p.id}" aria-label="В избранное">${window.RB_ICON('heart')}</button>
       <a class="card__media" href="${href}">
         <img class="card__img" loading="lazy" alt="${esc(p.name)}" src="${photoUrl(p)}" onerror="${imgFallback(p)}">
         ${disc || hit}${out}
@@ -101,9 +101,9 @@
   /* ---------- Каталог ---------- */
   function renderTabs() {
     const tabs = $('#filters'); if (!tabs) return;
-    const items = [{ id: 'all', name: 'Все товары', icon: '🗂️' }, ...CATEGORIES];
+    const items = [{ id: 'all', name: 'Все товары' }, ...CATEGORIES];
     tabs.innerHTML = items.map((c) =>
-      `<button class="tab ${state.category === c.id && !state.favOnly ? 'is-active' : ''}" data-cat="${c.id}"><span>${c.icon || ''}</span> ${c.name}</button>`).join('');
+      `<button class="tab ${state.category === c.id && !state.favOnly ? 'is-active' : ''}" data-cat="${c.id}">${c.name}</button>`).join('');
     tabs.querySelectorAll('.tab').forEach((el) => el.addEventListener('click', () => {
       state.category = el.dataset.cat; state.favOnly = false; renderTabs(); renderProducts();
     }));
@@ -170,13 +170,13 @@
           <p class="product__desc">${esc(productDesc(p))}</p>
           <ul class="product__specs">${specs}</ul>
           <div class="product__actions">
-            <button class="btn btn--primary" id="ppAdd" ${p.stock ? '' : 'disabled'}>🛒 В корзину</button>
-            <button class="btn btn--fav ${fav ? 'is-active' : ''}" id="ppFav">♥ ${fav ? 'В избранном' : 'В избранное'}</button>
+            <button class="btn btn--primary" id="ppAdd" ${p.stock ? '' : 'disabled'}>В корзину</button>
+            <button class="btn btn--fav ${fav ? 'is-active' : ''}" id="ppFav">${fav ? 'В избранном' : 'В избранное'}</button>
           </div>
           <div class="product__perks">
-            <span>🚚 Доставка по России за 1–3 дня</span>
-            <span>✅ Оригинал с гарантией производителя</span>
-            <span>💳 Оплата картой онлайн или при получении</span>
+            <span>${window.RB_ICON('truck')} Доставка по России за 1–3 дня</span>
+            <span>${window.RB_ICON('shield')} Оригинал с гарантией производителя</span>
+            <span>${window.RB_ICON('card')} Оплата картой онлайн или при получении</span>
           </div>
         </div>
       </div>`;
@@ -193,7 +193,7 @@
     if (i >= 0) state.fav.splice(i, 1); else state.fav.push(id);
     localStorage.setItem(LS.fav, JSON.stringify(state.fav));
     updateFavBadge(); renderHits(); renderProducts();
-    showToast(i >= 0 ? 'Удалено из избранного' : '♥ Добавлено в избранное');
+    showToast(i >= 0 ? 'Удалено из избранного' : 'Добавлено в избранное');
   }
   function updateFavBadge() { const el = $('#favCount'); if (el) el.textContent = state.fav.length; }
 
@@ -212,7 +212,7 @@
   function renderCart() {
     const body = $('#cartItems'); if (!body) return;
     const ids = Object.keys(state.cart);
-    if (!ids.length) body.innerHTML = `<div class="cart-empty">🛒<br>Корзина пуста.<br>Самое время выбрать снасть!</div>`;
+    if (!ids.length) body.innerHTML = `<div class="cart-empty"><span class="cart-empty__ico">${window.RB_ICON('cart')}</span>Корзина пуста.<br>Самое время выбрать снасть!</div>`;
     else {
       body.innerHTML = ids.map((id) => {
         const p = PRODUCTS.find((x) => x.id === id); if (!p) return '';
@@ -252,7 +252,7 @@
     $('#modalCard').innerHTML = `
       <button class="modal__close" id="modalClose" aria-label="Закрыть">✕</button>
       <div class="confirm">
-        <div class="confirm__check confirm__check--lock">🔒</div>
+        <div class="confirm__check confirm__check--lock">${window.RB_ICON('lock')}</div>
         <h2 class="confirm__title">Сначала войдите в аккаунт</h2>
         <p class="confirm__sub">Оформить заказ можно только зарегистрированным покупателям.<br>Это займёт минуту — корзина сохранится.</p>
         <a href="account.html" class="btn btn--primary btn--block">Войти или зарегистрироваться →</a>
@@ -301,7 +301,7 @@
             <div class="checkout__grand"><span>Итого к оплате</span><b id="ckTotal">${fmt(goods)}</b></div>
           </div>
           <button class="btn btn--primary btn--block" type="submit" id="ckSubmit">Оплатить ${fmt(goods)}</button>
-          <p class="confirm__demo">🔒 Демо: данные карты не сохраняются и не списываются — в истории останутся только последние 4 цифры.</p>
+          <p class="confirm__demo">Демо: данные карты не сохраняются и не списываются — в истории останутся только последние 4 цифры.</p>
         </form>
       </div>`;
     openProductModal();
@@ -362,7 +362,7 @@
     if ($('#accountView')) renderAccount();
     state.cart = {}; saveCart(); updateCartBadge();
     showOrderConfirm(order, state.user.email);
-    showToast(`Заказ №${order.no} оформлен! 🎣`);
+    showToast(`Заказ №${order.no} оформлен`);
   }
 
   function showOrderConfirm(order, email) {
@@ -373,7 +373,7 @@
       <div class="confirm">
         <div class="confirm__check">✓</div>
         <h2 class="confirm__title">Заказ №${order.no} оформлен!</h2>
-        <p class="confirm__sub">Спасибо за покупку в «РЫБОЛОВ» 🎣<br>Детали заказа отправлены на <b>${esc(email)}</b>.</p>
+        <p class="confirm__sub">Спасибо за покупку в «РЫБОЛОВ».<br>Детали заказа отправлены на <b>${esc(email)}</b>.</p>
         <div class="confirm__box">
           ${rows}
           <div class="order__row"><span>Доставка · ${esc(order.delivery.method)}</span><b>${order.delivery.price ? fmt(order.delivery.price) : '0 ₽'}</b></div>
@@ -381,7 +381,7 @@
           <div class="order__row"><span>${paid}</span><b></b></div>
           <div class="order__row order__row--total"><span>Итого</span><b>${fmt(order.total)}</b></div>
         </div>
-        <p class="confirm__demo">📧 Демо-версия: письмо «уходит» на почту условно, реальная оплата не списывается.</p>
+        <p class="confirm__demo">Демо-версия: письмо «уходит» на почту условно, реальная оплата не списывается.</p>
         <button class="btn btn--primary btn--block" id="confirmOk">Отлично!</button>
       </div>`;
     openProductModal();
@@ -399,7 +399,7 @@
         const d = new Date(o.date);
         const rows = o.items.map((it) => `<div class="order__row"><span>${esc(it.name)} × ${it.qty}</span><b>${fmt(it.price * it.qty)}</b></div>`).join('');
         return `<div class="order"><div class="order__head"><b>Заказ №${o.no || ''} · ${d.toLocaleDateString('ru-RU')}</b><span>${fmt(o.total)}</span></div>${rows}</div>`;
-      }).join('') : `<p class="account__empty">Заказов пока нет. Загляните в <a href="catalog.html">каталог</a> 🎣</p>`;
+      }).join('') : `<p class="account__empty">Заказов пока нет. Загляните в <a href="catalog.html">каталог</a>.</p>`;
       card.innerHTML = `
         <div class="account">
           <div class="account__head">
@@ -419,7 +419,7 @@
     } else {
       card.innerHTML = `
         <div class="auth">
-          <div class="auth__brand"><span>🎣</span> Личный кабинет РЫБОЛОВ</div>
+          <div class="auth__brand">Личный кабинет РЫБОЛОВ</div>
           <div class="auth__tabs">
             <button class="auth__tab ${authTab === 'login' ? 'is-active' : ''}" data-tab="login">Вход</button>
             <button class="auth__tab ${authTab === 'register' ? 'is-active' : ''}" data-tab="register">Регистрация</button>
@@ -430,7 +430,7 @@
             <label class="field field--v"><span class="field__label">Пароль</span><input class="input" id="authPass" type="password" required minlength="4" placeholder="минимум 4 символа"></label>
             <button class="btn btn--primary btn--block" type="submit">${authTab === 'login' ? 'Войти' : 'Создать аккаунт'}</button>
           </form>
-          <p class="auth__note">🔒 Демо-режим: данные хранятся только в вашем браузере.</p>
+          <p class="auth__note">Демо-режим: данные хранятся только в вашем браузере.</p>
         </div>`;
       card.querySelectorAll('.auth__tab').forEach((el) => el.addEventListener('click', () => { authTab = el.dataset.tab; renderAccount(); }));
       $('#authForm').addEventListener('submit', (e) => { e.preventDefault(); authTab === 'login' ? doLogin() : doRegister(); });
@@ -444,7 +444,7 @@
     if (users[email]) { showToast('Такой email уже зарегистрирован'); authTab = 'login'; renderAccount(); return; }
     users[email] = { name, email, password: pass, orders: [] }; saveUsers(users);
     localStorage.setItem(LS.session, email); state.user = users[email];
-    updateAccountLabel(); renderAccount(); showToast(`Добро пожаловать, ${name}! 🎣`);
+    updateAccountLabel(); renderAccount(); showToast(`Добро пожаловать, ${name}!`);
   }
   function doLogin() {
     const email = $('#authEmail').value.trim().toLowerCase(), pass = $('#authPass').value;

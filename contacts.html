@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎣</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='5' fill='%230d1512'/><path d='M3.5 12c3-4.5 8.5-4.5 12 0-3.5 4.5-9 4.5-12 0z' fill='none' stroke='%23c9a961' stroke-width='1.3' stroke-linejoin='round'/><path d='M15.5 12c1.8-1.8 3.6-1.8 5-.8-1 1.8-1 1.8 0 3.6-1.4 1-3.2 1-5-2.8z' fill='none' stroke='%23c9a961' stroke-width='1.3' stroke-linejoin='round'/></svg>">
 </head>
 <body data-page="contacts">
 
@@ -25,17 +25,17 @@
     <div class="container contacts__grid">
       <div>
         <ul class="contacts__list">
-          <li><span>📍</span><div><b>Адрес</b>Санкт-Петербург, Лиговский пр-т, 50, ТК «Рыбацкий двор»</div></li>
-          <li><span>🕗</span><div><b>Часы работы</b>ежедневно с 09:00 до 21:00</div></li>
-          <li><span>📞</span><div><b>Телефон</b><a href="tel:+78121234567">+7 (812) 123-45-67</a></div></li>
-          <li><span>✉️</span><div><b>Почта</b><a href="mailto:info@rybolov.spb.ru">info@rybolov.spb.ru</a></div></li>
-          <li><span>🚇</span><div><b>Метро</b>«Лиговский проспект», 5 минут пешком</div></li>
-          <li><span>💬</span><div><b>Мы в сети</b>Telegram · WhatsApp · VK — @rybolov_spb</div></li>
+          <li><span data-icon="pin"></span><div><b>Адрес</b>Санкт-Петербург, Лиговский пр-т, 50, ТК «Рыбацкий двор»</div></li>
+          <li><span data-icon="clock"></span><div><b>Часы работы</b>ежедневно с 09:00 до 21:00</div></li>
+          <li><span data-icon="phone"></span><div><b>Телефон</b><a href="tel:+78121234567">+7 (812) 123-45-67</a></div></li>
+          <li><span data-icon="mail"></span><div><b>Почта</b><a href="mailto:info@rybolov.spb.ru">info@rybolov.spb.ru</a></div></li>
+          <li><span data-icon="metro"></span><div><b>Метро</b>«Лиговский проспект», 5 минут пешком</div></li>
+          <li><span data-icon="chat"></span><div><b>Мы в сети</b>Telegram · WhatsApp · VK — @rybolov_spb</div></li>
         </ul>
       </div>
       <div>
         <div class="map-card">
-          <div class="map-card__pin">📍</div>
+          <div class="map-card__pin" data-icon="pin"></div>
           <p class="map-card__city">Санкт-Петербург</p>
           <p class="map-card__addr">Лиговский проспект, 50</p>
           <span class="map-card__note">Северная столица рыбалки на Неве и Финском заливе</span>
@@ -54,7 +54,7 @@
         </div>
         <label class="field field--v"><span class="field__label">Сообщение</span><textarea class="input" name="msg" rows="4" required placeholder="Чем помочь? Например: подберите спиннинг для джига на Неве"></textarea></label>
         <button class="btn btn--primary" type="submit">Отправить сообщение <span class="btn__arrow">→</span></button>
-        <p class="auth__note">🔒 Демо-версия: сообщение условно «уходит» на почту магазина.</p>
+        <p class="auth__note">Демо-версия: сообщение условно «уходит» на почту магазина.</p>
       </form>
     </div>
   </section>
@@ -66,7 +66,7 @@
     document.getElementById('feedbackForm').addEventListener('submit', function (e) {
       e.preventDefault();
       var t = document.getElementById('toast');
-      if (t) { t.textContent = 'Спасибо! Сообщение отправлено — ответим на почту 📧'; t.hidden = false; setTimeout(function () { t.hidden = true; }, 2600); }
+      if (t) { t.textContent = 'Спасибо! Сообщение отправлено — ответим на почту'; t.hidden = false; setTimeout(function () { t.hidden = true; }, 2600); }
       this.reset();
     });
   </script>

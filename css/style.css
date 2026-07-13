@@ -527,6 +527,21 @@ textarea.input { resize: vertical; font-family: inherit; line-height: 1.5; }
 #ckSubmit { margin-top: 18px; }
 .confirm__check--lock { background: linear-gradient(140deg, var(--gold-br), var(--gold-dk)); font-size: 1.8rem; }
 
+/* ===== Иконки (замена эмодзи) ===== */
+.pico { display: inline-block; vertical-align: -.15em; stroke: currentColor; }
+.feature__ico, .info-card__ico { color: var(--gold-br); }
+.contacts__list li > span { color: var(--gold-br); }
+.map-card__pin { color: var(--gold-br); }
+.seal__fish { color: var(--gold-br); }
+.topbar__item .pico, .topbar__phone .pico { color: var(--gold); width: 1.05em; height: 1.05em; margin-right: 4px; }
+.product__perks span { display: flex; align-items: center; gap: 10px; }
+.product__perks .pico { color: var(--gold); width: 19px; height: 19px; flex-shrink: 0; }
+.cart-empty__ico { display: block; margin-bottom: 12px; }
+.cart-empty__ico .pico { width: 46px; height: 46px; color: var(--gold); }
+.post-card__media { font-family: var(--serif); color: var(--gold-br); font-weight: 600; letter-spacing: .02em; }
+.card__fav .pico { width: 20px; height: 20px; }
+.card__fav.is-active .pico { fill: currentColor; }
+
 /* ===== Страница товара ===== */
 .product-page { padding: 40px 0 10px; }
 .product { display: grid; grid-template-columns: 1fr 1fr; gap: 46px; margin-top: 22px; align-items: start; }
