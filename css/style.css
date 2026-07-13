@@ -190,8 +190,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .brands__inner { display: flex; align-items: center; gap: 26px; padding: 22px 0; flex-wrap: wrap; }
 .brands__label { font-size: .74rem; text-transform: uppercase; letter-spacing: .16em; color: var(--gold); font-weight: 700; white-space: nowrap; }
 .brands__list { display: flex; gap: 32px; flex-wrap: wrap; }
-.brands__list span { font-family: var(--serif); font-size: 1.15rem; font-weight: 500; letter-spacing: .03em; color: var(--text); opacity: .5; transition: opacity .2s, color .2s; }
-.brands__list span:hover { opacity: 1; color: var(--gold-br); }
+.brands__list span, .brands__list a { font-family: var(--serif); font-size: 1.15rem; font-weight: 500; letter-spacing: .03em; color: var(--text); opacity: .5; transition: opacity .2s, color .2s; cursor: pointer; }
+.brands__list span:hover, .brands__list a:hover { opacity: 1; color: var(--gold-br); }
 
 /* ===== Общая сетка секций ===== */
 .hits, .cats, .catalog, .reviews, .contacts { padding: 70px 0; }
