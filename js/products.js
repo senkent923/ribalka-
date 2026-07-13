@@ -47,14 +47,14 @@ const PRODUCTS = [
     specs: { 'Диаметр': '0.35 мм', 'Длина': '100 м', 'Нагрузка': '16.5 кг', 'Тип': 'Монолеска', 'Особенность': 'без перекручиваний' } },
 
   // ---------------- Удилища ----------------
-  { id: 'rd-01', cat: 'rods', brand: 'Salmo', name: 'Удилище поплавочное Salmo Elite Pole 5.00 м', price: 2890, old: 3400, rating: 4.7, stock: true,
-    specs: { 'Длина': '5.00 м', 'Тип': 'Маховое', 'Секций': '5', 'Вес': '210 г', 'Тест': 'до 25 г' } },
+  { id: 'rd-01', cat: 'rods', brand: 'Salmo', name: 'Удилище поплавочное Salmo Elite Pole 5.00 м', price: 2890, old: 3400, rating: 4.7, stock: true, img: 'rd-01.jpeg',
+    specs: { 'Длина': '5.00 м', 'Тип': 'Маховое (телескоп)', 'Секций': '5', 'Вес': '210 г', 'Тест': 'до 25 г' } },
   { id: 'rd-02', cat: 'rods', brand: 'Mikado', name: 'Фидер Mikado Ultraviolet Feeder 3.60 м 120 г', price: 4590, old: 0, rating: 4.8, stock: true, img: 'rd-02.jpeg',
     specs: { 'Длина': '3.60 м', 'Тип': 'Фидер', 'Тест': 'до 120 г', 'Секций': '3+3', 'Вес': '285 г' } },
   { id: 'rd-03', cat: 'rods', brand: 'Trabucco', name: 'Болонское удилище Trabucco Selesta 6.00 м', price: 5290, old: 5990, rating: 4.6, stock: true, img: 'rd-03.jpeg',
     specs: { 'Длина': '6.00 м', 'Тип': 'Болонское', 'Секций': '6', 'Вес': '340 г', 'Тест': '5–25 г' } },
-  { id: 'rd-04', cat: 'rods', brand: 'Nisus', name: 'Карповое удилище Nisus Carp 3.60 м 3.5 lb', price: 3990, old: 0, rating: 4.5, stock: true,
-    specs: { 'Длина': '3.60 м', 'Тип': 'Карповое', 'Тест': '3.5 lb', 'Секций': '2', 'Вес': '395 г' } },
+  { id: 'rd-04', cat: 'rods', brand: 'Nisus', name: 'Карповое удилище Nisus Carp 3.60 м 3.5 lb', price: 3990, old: 0, rating: 4.5, stock: true, img: 'rd-04.jpeg',
+    specs: { 'Длина': '3.60 м', 'Тип': 'Карповое', 'Тест': '3.5 lb', 'Секций': '3', 'Вес': '395 г' } },
 
   // ---------------- Приманки ----------------
   { id: 'lu-01', cat: 'lures', brand: 'Rapala', name: 'Воблер Rapala Original Floater F07 7 см', price: 890, old: 0, rating: 4.9, stock: true, img: 'lu-01.jpeg',
@@ -71,13 +71,15 @@ const PRODUCTS = [
     specs: { 'Размер': '№2', 'Вес': '4.5 г', 'Тип': 'Вертушка', 'Лепесток': 'Long', 'Цвет': 'Золото' } },
   { id: 'lu-07', cat: 'lures', brand: 'Pontoon21', name: 'Блесна вертушка Pontoon21 Ball Concept №2', price: 640, old: 790, rating: 4.7, stock: true, img: 'lu-07.jpeg',
     specs: { 'Размер': '№2', 'Вес': '5 г', 'Тип': 'Вертушка с телом', 'Лепесток': 'In-Line', 'Цвет': 'Gold Trout' } },
+  { id: 'lu-08', cat: 'lures', brand: 'Flagman', name: 'Воблер Flagman Escort Minnow 110 SP (джеркбейт)', price: 990, old: 1190, rating: 4.8, stock: true, img: 'lu-08.jpeg',
+    specs: { 'Длина': '11 см', 'Вес': '13 г', 'Заглубление': '1.0–1.5 м', 'Плавучесть': 'Suspending', 'Тип': 'Jerkbait / Minnow', 'Цвет': 'Silver Black' } },
 
   // ---------------- Аксессуары ----------------
   { id: 'ac-01', cat: 'accessories', brand: 'Cottus', name: 'Подсак телескопический Cottus 2.0 м', price: 1490, old: 0, rating: 4.7, stock: true, img: 'ac-01.webp',
     specs: { 'Длина ручки': '2.0 м', 'Голова': '50×40 см', 'Сетка': 'нейлон', 'Складной': 'Да', 'Вес': '380 г' } },
   { id: 'ac-02', cat: 'accessories', brand: 'Plano', name: 'Ящик рыболовный Plano 6134 (3 полки)', price: 3290, old: 3890, rating: 4.9, stock: true, img: 'ac-02.jpeg',
     specs: { 'Размер': '46×26×26 см', 'Полок': '3 раскладных', 'Секций': '30+', 'Материал': 'Пластик', 'Вес': '1.9 кг' } },
-  { id: 'ac-03', cat: 'accessories', brand: 'Aquatic', name: 'Садок прорезиненный Aquatic 3.0 м', price: 1290, old: 0, rating: 4.6, stock: true,
+  { id: 'ac-03', cat: 'accessories', brand: 'Aquatic', name: 'Садок прорезиненный Aquatic 3.0 м', price: 1290, old: 0, rating: 4.6, stock: true, img: 'ac-03.jpeg',
     specs: { 'Длина': '3.0 м', 'Диаметр': '40 см', 'Материал': 'ПВХ-сетка', 'Колец': '8', 'Чехол': 'В комплекте' } },
   { id: 'ac-04', cat: 'accessories', brand: 'Owner', name: 'Крючки Owner 50922 Pin Hook №12 (12 шт)', price: 290, old: 0, rating: 4.9, stock: true, img: 'ac-04.jpeg',
     specs: { 'Размер': '№12', 'Диаметр': '0.37 мм', 'В упаковке': '12 шт', 'Тип': 'Super Needle Point', 'Покрытие': 'Никель' } },
