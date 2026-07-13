@@ -71,6 +71,33 @@
     }).join('');
   }
 
+  /* ---------- Акции (sale.html) ---------- */
+  function renderSale() {
+    const grid = $('#saleGrid'); if (!grid) return;
+    const list = PRODUCTS.filter((p) => p.old > p.price)
+      .sort((a, b) => (1 - a.price / a.old < 1 - b.price / b.old ? 1 : -1));
+    grid.innerHTML = list.map(cardMarkup).join(''); wireCards(grid);
+    if ($('#saleCount')) $('#saleCount').textContent = list.length;
+  }
+
+  /* ---------- Бренды (brands.html) ---------- */
+  function renderBrands() {
+    const grid = $('#brandsGrid'); if (!grid) return;
+    const brands = [...new Set(PRODUCTS.map((p) => p.brand))].sort((a, b) => a.localeCompare(b, 'ru'));
+    grid.innerHTML = brands.map((brand) => {
+      const items = PRODUCTS.filter((p) => p.brand === brand);
+      const cover = items.find((p) => p.img) || items[0];
+      return `<a class="cat-card" href="catalog.html?brand=${encodeURIComponent(brand)}">
+        <div class="cat-card__media"><img loading="lazy" alt="${esc(brand)}" src="${photoUrl(cover)}" onerror="${imgFallback(cover)}"></div>
+        <div class="cat-card__foot">
+          <div><div class="cat-card__name">${esc(brand)}</div><div class="cat-card__count">${items.length} ${declProducts(items.length)}</div></div>
+          <span class="cat-card__arrow">→</span>
+        </div>
+      </a>`;
+    }).join('');
+    if ($('#brandsCount')) $('#brandsCount').textContent = brands.length;
+  }
+
   /* ---------- Каталог ---------- */
   function renderTabs() {
     const tabs = $('#filters'); if (!tabs) return;
@@ -431,16 +458,17 @@
     updateCartBadge(); updateFavBadge(); updateAccountLabel();
     const stat = $('#statCount'); if (stat) stat.textContent = PRODUCTS.filter((p) => p.stock).length;
 
-    // главная
-    renderHits(); renderCategories();
+    // главная + витрины
+    renderHits(); renderCategories(); renderSale(); renderBrands();
 
     // каталог: читаем параметры URL
     if ($('#products')) {
       const q = new URLSearchParams(location.search);
       if (q.get('cat') && CATEGORIES.some((c) => c.id === q.get('cat'))) state.category = q.get('cat');
+      if (q.get('brand') && PRODUCTS.some((p) => p.brand === q.get('brand'))) state.brand = q.get('brand');
       if (q.get('fav') === '1') state.favOnly = true;
       if (q.get('q')) { state.query = q.get('q'); const si = $('#searchInput'); if (si) si.value = state.query; }
-      renderTabs(); renderBrandFilter(); renderProducts();
+      renderTabs(); renderBrandFilter(); if ($('#brandFilter')) $('#brandFilter').value = state.brand; renderProducts();
       $('#sortSelect')?.addEventListener('change', (e) => { state.sort = e.target.value; renderProducts(); });
       $('#brandFilter')?.addEventListener('change', (e) => { state.brand = e.target.value; renderProducts(); });
       $('#inStock')?.addEventListener('change', (e) => { state.inStock = e.target.checked; renderProducts(); });

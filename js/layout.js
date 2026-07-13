@@ -7,8 +7,11 @@
   const NAV = [
     { href: 'index.html',    page: 'home',     label: 'Главная' },
     { href: 'catalog.html',  page: 'catalog',  label: 'Каталог' },
+    { href: 'sale.html',     page: 'sale',     label: 'Акции' },
+    { href: 'brands.html',   page: 'brands',   label: 'Бренды' },
+    { href: 'blog.html',     page: 'blog',     label: 'Советы' },
+    { href: 'services.html', page: 'services', label: 'Услуги' },
     { href: 'about.html',    page: 'about',    label: 'О магазине' },
-    { href: 'delivery.html', page: 'delivery', label: 'Доставка и оплата' },
     { href: 'contacts.html', page: 'contacts', label: 'Контакты' },
   ];
 
@@ -78,8 +81,10 @@
       </div>
       <div class="footer__col">
         <h4>Магазин</h4>
+        <a href="sale.html">Акции и скидки</a><a href="brands.html">Бренды</a>
+        <a href="blog.html">Советы рыбакам</a><a href="services.html">Услуги</a>
         <a href="about.html">О магазине</a><a href="delivery.html">Доставка и оплата</a>
-        <a href="contacts.html">Контакты</a><a href="account.html">Личный кабинет</a>
+        <a href="account.html">Личный кабинет</a>
       </div>
       <div class="footer__col">
         <h4>Контакты</h4>
