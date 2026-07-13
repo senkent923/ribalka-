@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Каталог рыболовных снастей РЫБОЛОВ — спиннинги, катушки, лески, воблеры, удилища и аксессуары с фильтрами по бренду и цене.">
+  <title>Каталог снастей — РЫБОЛОВ · Санкт-Петербург</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎣</text></svg>">
+</head>
+<body data-page="catalog">
+
+  <section class="page-hero">
+    <div class="container">
+      <nav class="crumbs"><a href="index.html">Главная</a> <span>/</span> Каталог</nav>
+      <h1 class="page-hero__title">Каталог снастей</h1>
+      <p class="page-hero__sub">Реальные товары, характеристики и честные цены</p>
+    </div>
+  </section>
+
+  <section class="catalog">
+    <div class="container">
+      <div class="tabs" id="filters"></div>
+
+      <div class="toolbar">
+        <div class="toolbar__group">
+          <label class="field"><span class="field__label">Бренд</span><select id="brandFilter" class="select"></select></label>
+          <label class="field"><span class="field__label">Цена, ₽</span>
+            <span class="range"><input type="number" id="priceMin" class="input" placeholder="от" min="0"><span class="range__sep">–</span><input type="number" id="priceMax" class="input" placeholder="до" min="0"></span>
+          </label>
+          <label class="check"><input type="checkbox" id="inStock"> <span>Только в наличии</span></label>
+        </div>
+        <div class="toolbar__group">
+          <label class="field"><span class="field__label">Сортировка</span>
+            <select id="sortSelect" class="select">
+              <option value="popular">По популярности</option>
+              <option value="price-asc">Сначала дешёвые</option>
+              <option value="price-desc">Сначала дорогие</option>
+              <option value="rating">По рейтингу</option>
+            </select>
+          </label>
+          <button class="btn btn--dark btn--sm" id="resetFilters">Сбросить</button>
+        </div>
+      </div>
+
+      <p class="catalog__meta" id="catalogMeta"></p>
+      <div class="products" id="products"></div>
+      <div class="empty" id="empty" hidden>
+        <p>😕 По вашему запросу ничего не найдено.</p>
+        <button class="btn btn--dark" id="resetBtn">Сбросить фильтры</button>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/products.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
