@@ -129,7 +129,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .icon-btn:hover { border-color: var(--gold); color: var(--gold-br); }
 .icon-btn__ico { font-size: 1.05rem; }
-#favToggle .icon-btn__ico { color: #e0868f; }
+.ic { width: 21px; height: 21px; display: block; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.nav-toggle { color: var(--text); }
+.nav-toggle:hover { color: var(--gold-br); }
+.nav-toggle .ic { width: 24px; height: 24px; }
 .icon-btn__count, .cart-toggle__count {
   min-width: 20px; height: 20px; padding: 0 5px; border-radius: 999px;
   background: var(--gold); color: var(--ink); font-size: .72rem; font-weight: 800;

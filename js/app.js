@@ -244,7 +244,7 @@
               <label class="opt"><input type="radio" name="pay" value="delivery"><span class="opt__main">Картой при получении</span></label>
             </div>
           </div>
-          <div class="checkout__block">
+          <div class="checkout__block" id="cardBlock">
             <h3 class="checkout__h">3 · Данные карты</h3>
             <label class="field field--v"><span class="field__label">Номер карты</span><input class="input" id="ckCard" inputmode="numeric" maxlength="19" placeholder="0000 0000 0000 0000"></label>
             <div class="feedback__row">
@@ -269,10 +269,12 @@
     const recalc = () => {
       const d = DELIVERY[form.delivery.value];
       $('#addrBlock').style.display = d.addr ? '' : 'none';
+      const online = form.pay.value === 'online';
+      $('#cardBlock').style.display = online ? '' : 'none';   // карта только при онлайн-оплате
       $('#ckDelivery').textContent = d.price ? fmt(d.price) : 'бесплатно';
       const grand = goods + d.price;
       $('#ckTotal').textContent = fmt(grand);
-      $('#ckSubmit').textContent = form.pay.value === 'online' ? `Оплатить ${fmt(grand)}` : `Оформить заказ · ${fmt(grand)}`;
+      $('#ckSubmit').textContent = online ? `Оплатить ${fmt(grand)}` : `Оформить заказ · ${fmt(grand)}`;
     };
     form.querySelectorAll('input[name=delivery], input[name=pay]').forEach((el) => el.addEventListener('change', recalc));
     $('#ckCard').addEventListener('input', (e) => { e.target.value = e.target.value.replace(/\D/g, '').slice(0, 16).replace(/(.{4})/g, '$1 ').trim(); });
@@ -287,17 +289,22 @@
     const form = e.target;
     const d = DELIVERY[form.delivery.value];
     const pay = form.pay.value;
-    const card = $('#ckCard').value.replace(/\s/g, '');
-    const exp = $('#ckExp').value, cvc = $('#ckCvc').value, holder = $('#ckHolder').value.trim();
     let city = '', addr = '';
     if (d.addr) {
       city = $('#ckCity').value.trim(); addr = $('#ckAddr').value.trim();
       if (!city || !addr) { showToast('Укажите город и адрес доставки'); return; }
     }
-    if (card.length !== 16) { showToast('Введите 16 цифр номера карты'); return; }
-    if (!/^\d{2}\/\d{2}$/.test(exp)) { showToast('Срок карты в формате ММ/ГГ'); return; }
-    if (cvc.length !== 3) { showToast('CVC — 3 цифры'); return; }
-    if (!holder) { showToast('Введите имя на карте'); return; }
+    // Данные карты нужны только при онлайн-оплате
+    let cardLast4 = '';
+    if (pay === 'online') {
+      const card = $('#ckCard').value.replace(/\s/g, '');
+      const exp = $('#ckExp').value, cvc = $('#ckCvc').value, holder = $('#ckHolder').value.trim();
+      if (card.length !== 16) { showToast('Введите 16 цифр номера карты'); return; }
+      if (!/^\d{2}\/\d{2}$/.test(exp)) { showToast('Срок карты в формате ММ/ГГ'); return; }
+      if (cvc.length !== 3) { showToast('CVC — 3 цифры'); return; }
+      if (!holder) { showToast('Введите имя на карте'); return; }
+      cardLast4 = card.slice(-4);
+    }
 
     const goods = cartTotal();
     const items = Object.entries(state.cart).map(([id, q]) => { const p = PRODUCTS.find((x) => x.id === id); return { id, name: p ? p.name : id, qty: q, price: p ? p.price : 0 }; });
@@ -305,8 +312,8 @@
       no: Math.floor(100000 + Math.random() * 900000), date: new Date().toISOString(),
       goods, total: goods + d.price,
       delivery: { method: d.label, price: d.price, city, addr },
-      payment: pay === 'online' ? 'Онлайн картой' : 'Картой при получении',
-      cardLast4: card.slice(-4), items,
+      payment: pay === 'online' ? 'Онлайн картой' : 'Оплата при получении',
+      cardLast4, items,
     };
     const users = loadJSON(LS.users, {}); const u = users[state.user.email];
     u.orders = u.orders || []; u.orders.unshift(order); saveUsers(users); state.user = u;
@@ -318,7 +325,7 @@
 
   function showOrderConfirm(order, email) {
     const rows = order.items.map((it) => `<div class="order__row"><span>${esc(it.name)} × ${it.qty}</span><b>${fmt(it.price * it.qty)}</b></div>`).join('');
-    const paid = order.payment === 'Онлайн картой' ? `Оплачено картой •••• ${order.cardLast4}` : `Оплата при получении · карта •••• ${order.cardLast4}`;
+    const paid = order.payment === 'Онлайн картой' ? `Оплачено картой •••• ${order.cardLast4}` : 'Оплата при получении';
     $('#modalCard').innerHTML = `
       <button class="modal__close" id="modalClose" aria-label="Закрыть">✕</button>
       <div class="confirm">

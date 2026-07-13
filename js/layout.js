@@ -32,17 +32,24 @@
       </a>
       <nav class="nav" id="mainNav">${navLinks}</nav>
       <div class="header__actions">
-        <button class="icon-btn icon-btn--search" id="searchOpen" aria-label="Поиск"><span class="icon-btn__ico">🔍</span></button>
+        <button class="icon-btn icon-btn--search" id="searchOpen" aria-label="Поиск">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+        </button>
         <a href="catalog.html?fav=1" class="icon-btn" id="favLink" aria-label="Избранное">
-          <span class="icon-btn__ico">♥</span><span class="icon-btn__count" id="favCount">0</span>
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5C6 16.7 3 13.4 3 9.6 3 7 5 5 7.5 5c1.7 0 3.3 1 4.5 2.6C13.2 6 14.8 5 16.5 5 19 5 21 7 21 9.6c0 3.8-3 7.1-9 10.9z"/></svg>
+          <span class="icon-btn__count" id="favCount">0</span>
         </a>
         <a href="account.html" class="icon-btn" aria-label="Личный кабинет">
-          <span class="icon-btn__ico">👤</span><span class="icon-btn__label" id="accountLabel">Войти</span>
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c.6-4 3.7-6 7.5-6s6.9 2 7.5 6"/></svg>
+          <span class="icon-btn__label" id="accountLabel">Войти</span>
         </a>
         <button class="cart-toggle" id="cartToggle" aria-label="Корзина">
-          <span class="cart-toggle__ico">🛒</span><span class="cart-toggle__count" id="cartCount">0</span>
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9.5" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M3 4h2.2l2.1 10.4a1.6 1.6 0 0 0 1.6 1.3h8.2a1.6 1.6 0 0 0 1.5-1.2L21 8H6.2"/></svg>
+          <span class="cart-toggle__count" id="cartCount">0</span>
         </button>
-        <button class="nav-toggle" id="navToggle" aria-label="Меню">☰</button>
+        <button class="nav-toggle" id="navToggle" aria-label="Меню">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+        </button>
       </div>
     </div>
     <div class="header__search" id="headerSearch" hidden>
