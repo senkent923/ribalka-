@@ -282,26 +282,27 @@
           <div class="checkout__block">
             <h3 class="checkout__h">2 · Оплата</h3>
             <div class="opts">
-              <label class="opt"><input type="radio" name="pay" value="online" checked><span class="opt__main">Онлайн картой сейчас</span></label>
-              <label class="opt"><input type="radio" name="pay" value="delivery"><span class="opt__main">Картой при получении</span></label>
+              <label class="opt"><input type="radio" name="pay" value="online" checked><span class="opt__main">Онлайн по СБП (QR-код)</span><span class="opt__price">без комиссии</span></label>
+              <label class="opt"><input type="radio" name="pay" value="delivery"><span class="opt__main">Наличными или картой при получении</span></label>
             </div>
           </div>
           <div class="checkout__block" id="cardBlock">
-            <h3 class="checkout__h">3 · Данные карты</h3>
-            <label class="field field--v"><span class="field__label">Номер карты</span><input class="input" id="ckCard" inputmode="numeric" maxlength="19" placeholder="0000 0000 0000 0000"></label>
-            <div class="feedback__row">
-              <label class="field field--v"><span class="field__label">Срок (ММ/ГГ)</span><input class="input" id="ckExp" maxlength="5" placeholder="09/28"></label>
-              <label class="field field--v"><span class="field__label">CVC</span><input class="input" id="ckCvc" inputmode="numeric" maxlength="3" placeholder="000"></label>
+            <h3 class="checkout__h">3 · Оплата по QR (СБП)</h3>
+            <div class="sbp">
+              <div class="sbp__qr" id="sbpQr">${window.RB_ICON('qr')}<span>QR&nbsp;СБП</span></div>
+              <div class="sbp__info">
+                <p>Отсканируйте QR-код в приложении вашего банка и подтвердите перевод <b id="sbpAmount">${fmt(goods)}</b> по Системе быстрых платежей.</p>
+                <p class="sbp__note">Деньги поступают напрямую на счёт магазина. Данные карты вводить не нужно — это безопасно и легально.</p>
+              </div>
             </div>
-            <label class="field field--v"><span class="field__label">Имя на карте</span><input class="input" id="ckHolder" placeholder="IVAN IVANOV"></label>
           </div>
           <div class="checkout__summary">
             <div><span>Товары</span><b>${fmt(goods)}</b></div>
             <div><span>Доставка</span><b id="ckDelivery">бесплатно</b></div>
             <div class="checkout__grand"><span>Итого к оплате</span><b id="ckTotal">${fmt(goods)}</b></div>
           </div>
-          <button class="btn btn--primary btn--block" type="submit" id="ckSubmit">Оплатить ${fmt(goods)}</button>
-          <p class="confirm__demo">Демо: данные карты не сохраняются и не списываются — в истории останутся только последние 4 цифры.</p>
+          <button class="btn btn--primary btn--block" type="submit" id="ckSubmit">Оплатить по СБП · ${fmt(goods)}</button>
+          <p class="confirm__demo">Демо: подключите СБП-реквизиты вашего банка (для ИП или самозанятого) — и оплата станет реальной.</p>
         </form>
       </div>`;
     openProductModal();
@@ -312,16 +313,14 @@
       const d = DELIVERY[form.delivery.value];
       $('#addrBlock').style.display = d.addr ? '' : 'none';
       const online = form.pay.value === 'online';
-      $('#cardBlock').style.display = online ? '' : 'none';   // карта только при онлайн-оплате
+      $('#cardBlock').style.display = online ? '' : 'none';   // блок СБП только при онлайн-оплате
       $('#ckDelivery').textContent = d.price ? fmt(d.price) : 'бесплатно';
       const grand = goods + d.price;
       $('#ckTotal').textContent = fmt(grand);
-      $('#ckSubmit').textContent = online ? `Оплатить ${fmt(grand)}` : `Оформить заказ · ${fmt(grand)}`;
+      if ($('#sbpAmount')) $('#sbpAmount').textContent = fmt(grand);
+      $('#ckSubmit').textContent = online ? `Оплатить по СБП · ${fmt(grand)}` : `Оформить заказ · ${fmt(grand)}`;
     };
     form.querySelectorAll('input[name=delivery], input[name=pay]').forEach((el) => el.addEventListener('change', recalc));
-    $('#ckCard').addEventListener('input', (e) => { e.target.value = e.target.value.replace(/\D/g, '').slice(0, 16).replace(/(.{4})/g, '$1 ').trim(); });
-    $('#ckExp').addEventListener('input', (e) => { let v = e.target.value.replace(/\D/g, '').slice(0, 4); if (v.length > 2) v = v.slice(0, 2) + '/' + v.slice(2); e.target.value = v; });
-    $('#ckCvc').addEventListener('input', (e) => { e.target.value = e.target.value.replace(/\D/g, '').slice(0, 3); });
     recalc();
     form.addEventListener('submit', submitCheckout);
   }
@@ -336,26 +335,15 @@
       city = $('#ckCity').value.trim(); addr = $('#ckAddr').value.trim();
       if (!city || !addr) { showToast('Укажите город и адрес доставки'); return; }
     }
-    // Данные карты нужны только при онлайн-оплате
-    let cardLast4 = '';
-    if (pay === 'online') {
-      const card = $('#ckCard').value.replace(/\s/g, '');
-      const exp = $('#ckExp').value, cvc = $('#ckCvc').value, holder = $('#ckHolder').value.trim();
-      if (card.length !== 16) { showToast('Введите 16 цифр номера карты'); return; }
-      if (!/^\d{2}\/\d{2}$/.test(exp)) { showToast('Срок карты в формате ММ/ГГ'); return; }
-      if (cvc.length !== 3) { showToast('CVC — 3 цифры'); return; }
-      if (!holder) { showToast('Введите имя на карте'); return; }
-      cardLast4 = card.slice(-4);
-    }
-
+    // Онлайн-оплата идёт по СБП в приложении банка — карту на сайте не вводим.
     const goods = cartTotal();
     const items = Object.entries(state.cart).map(([id, q]) => { const p = PRODUCTS.find((x) => x.id === id); return { id, name: p ? p.name : id, qty: q, price: p ? p.price : 0 }; });
     const order = {
       no: Math.floor(100000 + Math.random() * 900000), date: new Date().toISOString(),
       goods, total: goods + d.price,
       delivery: { method: d.label, price: d.price, city, addr },
-      payment: pay === 'online' ? 'Онлайн картой' : 'Оплата при получении',
-      cardLast4, items,
+      payment: pay === 'online' ? 'Оплата по СБП (QR)' : 'Оплата при получении',
+      items,
     };
     const users = loadJSON(LS.users, {}); const u = users[state.user.email];
     u.orders = u.orders || []; u.orders.unshift(order); saveUsers(users); state.user = u;
@@ -367,7 +355,7 @@
 
   function showOrderConfirm(order, email) {
     const rows = order.items.map((it) => `<div class="order__row"><span>${esc(it.name)} × ${it.qty}</span><b>${fmt(it.price * it.qty)}</b></div>`).join('');
-    const paid = order.payment === 'Онлайн картой' ? `Оплачено картой •••• ${order.cardLast4}` : 'Оплата при получении';
+    const paid = order.payment;
     $('#modalCard').innerHTML = `
       <button class="modal__close" id="modalClose" aria-label="Закрыть">✕</button>
       <div class="confirm">
